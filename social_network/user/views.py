@@ -26,7 +26,6 @@ class UserRegisterView(APIView):
 
             # Sending email to verify user
             user_data       = serializer.data
-            print(user_data)
             user            = User.objects.get(email=user_data['email'])
             token           = RefreshToken.for_user(user).access_token
             current_site    = get_current_site(request).domain
