@@ -44,3 +44,6 @@ Comment
 /api/v1/comment/<post_id>                    # GET: Get All Comments
 /api/v1/comment/<post_id>/sub/<comment_id>   # GET: Get All Subcomments  
 ```
+
+## API Document
+[API Document](https://github.com/Merevoli-DatLuu/SocialNetworkAPI/wiki/API-Documentation-V1)
