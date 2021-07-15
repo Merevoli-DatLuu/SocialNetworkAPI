@@ -59,6 +59,7 @@ Comment
 ## Demo
 [Demo](https://replit.com/join/odwfilaepm-merevolidatluu)
 
-> Kiểm tra xem pipenv đã được cài đặt chưa. Nếu rồi thì không cần cài đặt gì thêm
+> + Yêu cầu đăng nhập trên `replit`
+> + Kiểm tra xem pipenv đã được cài đặt chưa. Nếu rồi thì không cần cài đặt gì thêm
 
 ![](https://github.com/Merevoli-DatLuu/SocialNetworkAPI/blob/master/preview/demo.png)
