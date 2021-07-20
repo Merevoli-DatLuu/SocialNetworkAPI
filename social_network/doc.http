@@ -147,22 +147,22 @@ content-type: application/json
 Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNjI2NjkyMzgxLCJqdGkiOiI2MmJkOGVlYjlkOWU0MmMxOWZiZjExZjllOTVjZTlmOCIsInVzZXJfaWQiOjIxfQ.OJI-jBBxFYX_fDUZFWFiR5SXMvZNwcFDqlDp8QJuzLs
 
 ### Like Post 
-POST http://127.0.0.1:8000/api/v1/likepost/4 HTTP/1.1
+POST http://127.0.0.1:8000/api/v1/like-post/4 HTTP/1.1
 content-type: application/json
 Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNjI2NzE2MDkxLCJqdGkiOiI0ZDM4M2VmYmQwYzU0OTY2OGVmOGE3MDg4NDNkOTNhOCIsInVzZXJfaWQiOjIxfQ.KWWRHyZYxylzyrqgxGoAAzAe0-_3TRoMQNbA55V0PyI
 
 ### Unlike Post 
-DELETE  http://127.0.0.1:8000/api/v1/likepost/4 HTTP/1.1
+DELETE  http://127.0.0.1:8000/api/v1/like-post/4 HTTP/1.1
 content-type: application/json
 Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNjI2Njk4MzIxLCJqdGkiOiIzOGJhZmRhZjE1M2Q0YzdhODk4NWIxMDg1Zjg1NWNlZCIsInVzZXJfaWQiOjIxfQ.ppVi2B6C804uJNDdQMjOgqyC-SyPV1guPTVsxiTDx2I
 
 ### Likepost list
-GET http://127.0.0.1:8000/api/v1/likepost/4 HTTP/1.1
+GET http://127.0.0.1:8000/api/v1/like-post/4 HTTP/1.1
 content-type: application/json
 Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNjI2NzEzMzg3LCJqdGkiOiI3NDQ0OTdhYjlhODk0ZWQ0YTM3Y2JkNWUyYTBiNjdjMyIsInVzZXJfaWQiOjIxfQ.pN8zgac30b_qVL1l4ZKe2_q7x0KQ6P7NTEkyUQrPAVA
 
 ### Likepost list
-GET http://127.0.0.1:8000/api/v1/likepost/4?page=1 HTTP/1.1
+GET http://127.0.0.1:8000/api/v1/like-post/4?page=1 HTTP/1.1
 content-type: application/json
 Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNjI2NzEzMzg3LCJqdGkiOiI3NDQ0OTdhYjlhODk0ZWQ0YTM3Y2JkNWUyYTBiNjdjMyIsInVzZXJfaWQiOjIxfQ.pN8zgac30b_qVL1l4ZKe2_q7x0KQ6P7NTEkyUQrPAVA
 
