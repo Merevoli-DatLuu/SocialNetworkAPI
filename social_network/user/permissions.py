@@ -1,9 +1,14 @@
 from rest_framework import permissions
-
-class UserVerifyPermission(permissions.BasePermission):
+from allauth.account.models import EmailAddress 
+    
+class UserVerifyPermission(permissions.IsAuthenticated):
     """
     Permission check for verified users
     """
 
     def has_permission(self, request, view):
-        return request.user.is_verified
+        if super().has_permission(request, view):
+            user = EmailAddress.objects.get(email=request.user.email)
+            return user.verified
+        return False
+    

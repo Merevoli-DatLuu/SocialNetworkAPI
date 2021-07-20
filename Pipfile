@@ -10,6 +10,9 @@ django = "*"
 djangorestframework = "*"
 djangorestframework-simplejwt = "*"
 pyotp = "*"
+dj-rest-auth = "*"
+django-allauth = "*"
+celery = "*"
 
 [requires]
 python_version = "3.7"

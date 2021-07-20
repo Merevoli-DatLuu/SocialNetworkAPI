@@ -1,74 +1,51 @@
 from rest_framework import serializers
+from dj_rest_auth.registration.serializers import RegisterSerializer
+from dj_rest_auth.serializers import LoginSerializer, PasswordChangeSerializer
 
 from .models import User
-from .validators import validate_secure_email
+from .validators import validate_secure_email, validate_age
 
-class UserRegisterSerializer(serializers.ModelSerializer):
 
-    class Meta:
-        model = User
-        fields = ['email', 'first_name', 'last_name', 'password', 'age']
-        extra_kwargs = {
-            'email': {'required': True},
-            'first_name': {'required': True},
-            'last_name': {'required': False},
-            'password': {'required': True},
-            'age': {'required': True},
+class UserRegisterSerializer(RegisterSerializer):
+    username = None
+    age = serializers.IntegerField(validators=[validate_age], required=True)
+    first_name = serializers.CharField(required=True)
+    last_name = serializers.CharField(required=False)
+    
+    def validate_password1(self, password):
+        validate_secure_email(password)
+        return super().validate_password1(password)
+    
+    def get_cleaned_data(self):
+        super().get_cleaned_data()
+        return {
+            'email': self.validated_data.get('email', ''),
+            'first_name': self.validated_data.get('first_name', ''),
+            'last_name': self.validated_data.get('last_name', ''),
+            'password1': self.validated_data.get('password1', ''),
+            'age': self.validated_data.get('age', 0)
         }
-
-    def create(self, validated_data):
-        user = User.objects.create(
-            email       = validated_data['email'],
-            first_name  = validated_data['first_name'],
-            age         = validated_data['age']
-        )
-
-        if 'last_name' in validated_data:
-            user.last_name = validated_data['last_name']
-        
-        user.set_password(validated_data['password'])
+    
+    def save(self, request):
+        user = super().save(request)
+        user.age = self.data.get('age')
+        user.first_name = self.data.get('first_name')
+        user.last_name = self.data.get('last_name')
         user.save()
-
         return user
 
-class UserVerifySerializer(serializers.Serializer):
-    token = serializers.CharField(max_length=700)
 
-    class Meta:
-        model = User
-        fields = ['token']
+class UserLoginSerializer(LoginSerializer):
+    username = None
 
-class UserLoginSerializer(serializers.Serializer):
-    email = serializers.EmailField(required=True)
-    password = serializers.CharField(required=True)
 
-class UserChangePasswordSerializer(serializers.Serializer):
-    old_password = serializers.CharField(required=True)
-    new_password = serializers.CharField(required=True, validators=[validate_secure_email])
-    confirm_password = serializers.CharField(required=True)
+class UserChangePasswordSerializer(PasswordChangeSerializer):
+    new_password1 = serializers.CharField(max_length=128, validators = [validate_secure_email])   
 
-    def validate(self, attrs):
-        if attrs['new_password'] != attrs['confirm_password']:
-            raise serializers.ValidationError({"password": "Password fields didn't match."})
-
-        return attrs
-
-class UserResetPasswordSerializer(serializers.Serializer):
-    email = serializers.EmailField(required=True)
-
-class UserResetConfirmPasswordSerializer(serializers.Serializer):
-    code = serializers.CharField(required=True)
-    new_password = serializers.CharField(required=True, validators=[validate_secure_email])
-    confirm_password = serializers.CharField(required=True)
-
-    def validate(self, attrs):
-        if attrs['new_password'] != attrs['confirm_password']:
-            raise serializers.ValidationError({"password": "Password fields didn't match."})
-
-        return attrs
 
 class UserSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
         exclude = ('password', )
 
+    

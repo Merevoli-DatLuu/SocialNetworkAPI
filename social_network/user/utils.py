@@ -3,7 +3,6 @@ import threading
 import datetime
 import base64
 
-
 class EmailThread(threading.Thread):
     def __init__(self, email):
         self.email = email

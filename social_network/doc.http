@@ -1,0 +1,220 @@
+### User Login
+POST http://127.0.0.1:8000/api/v1/user/login HTTP/1.1
+content-type: application/json
+
+{
+    "email": "datluu.1702@gmail.com",
+    "password": "12345678aa"
+}
+
+### Test Register
+POST http://127.0.0.1:8000/api/v1/user/register HTTP/1.1
+content-type: application/json
+
+{
+    "email": "hbc77435@eoopy.com",
+    "password1": "12345678aa",
+    "password2": "12345678aa",
+    "age": "18",
+    "first_name": "Hello"
+}
+
+### Test Register
+POST http://127.0.0.1:8000/api/v1/user/register-2 HTTP/1.1
+content-type: application/json
+
+{
+    "email": "rpf44610@cuoly.com",
+    "password1": "12345678aa",
+    "password2": "12345678aa",
+    "age": "18",
+    "first_name": "Hello",
+    "first_name": "dj-rest-auth"
+}
+
+### User Login
+POST http://127.0.0.1:8000/api/v1/user/login HTTP/1.1
+content-type: application/json
+
+{
+    "email": "hbc77435@eoopy.com",
+    "password": "12345678aa"
+}
+
+### User Login
+POST http://127.0.0.1:8000/api/v1/user/login HTTP/1.1
+content-type: application/json
+
+{
+    "email": "rpf44610@cuoly.com",
+    "password": "12345678aa"
+}
+
+### User Change Password
+
+POST http://127.0.0.1:8000/api/v1/user/change-password HTTP/1.1
+content-type: application/json
+Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNjI2NjcyNjI5LCJqdGkiOiJlMzcwYzg1OWZlMGI0ZGM4ODA4Mzg5ZjQ1ODcxYmJhNCIsInVzZXJfaWQiOjIxfQ.KXANkHJsOYzMSpgpLXdI-f7h5TuByqOnyjX9K5u8kwo
+
+{
+    "old_password": "12345678aa",
+    "new_password1": "12345678aa",
+    "new_password2": "12345678aa"
+
+}
+
+### User Reset Password
+POST http://127.0.0.1:8000/api/v1/user/reset-password HTTP/1.1
+content-type: application/json
+
+{
+    "email": "hbc77435@eoopy.com"
+
+}
+
+### User Reset Confirm Password
+POST http://127.0.0.1:8000/api/v1/user/reset-confirm-password/k/aq13c7-7d3a54347343efd56656fc170e868314/ HTTP/1.1
+content-type: application/json
+
+{
+    "uid": "l",
+    "token": "aq16yg-d894fbec430bbe808cb2a96e719d1ee1",
+    "new_password1": "12345678ab",
+    "new_password2": "12345678ab"
+
+}
+
+### User Profile
+GET http://127.0.0.1:8000/api/v1/user/me HTTP/1.1
+content-type: application/json
+Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNjI2NjczMTQ2LCJqdGkiOiI5NWQyZmIwZjRkZTM0MzdmYWMzZTE4ZDY0N2FkZTc0YSIsInVzZXJfaWQiOjIxfQ.elMTQujNVmVXp_4W_DGn5e4SI8YIbBOMPXGKrJSNfY8
+
+### User Detail
+GET http://127.0.0.1:8000/api/v1/user/20 HTTP/1.1
+content-type: application/json
+Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNjI2Njk4MzIxLCJqdGkiOiIzOGJhZmRhZjE1M2Q0YzdhODk4NWIxMDg1Zjg1NWNlZCIsInVzZXJfaWQiOjIxfQ.ppVi2B6C804uJNDdQMjOgqyC-SyPV1guPTVsxiTDx2I
+
+### User List
+GET http://127.0.0.1:8000/api/v1/user/ HTTP/1.1
+content-type: application/json
+Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNjI2NjczMTQ2LCJqdGkiOiI5NWQyZmIwZjRkZTM0MzdmYWMzZTE4ZDY0N2FkZTc0YSIsInVzZXJfaWQiOjIxfQ.elMTQujNVmVXp_4W_DGn5e4SI8YIbBOMPXGKrJSNfY8
+
+
+### Test URL Parameter
+POST http://127.0.0.1:8000/api/v1/post/test/123 HTTP/1.1
+content-type: application/json
+
+### Post create 
+POST http://127.0.0.1:8000/api/v1/post HTTP/1.1
+content-type: application/json
+Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNjI2NzA2Njg4LCJqdGkiOiJjNDNlYWZjNjFjNzM0YTYxODBiMmJlODYxMDU5OGFlMSIsInVzZXJfaWQiOjIwfQ.qeMpHbZm6tdMA6QrJmP6Az8fkHtsbb5r-p-Ond5jWoM
+
+{
+    "title": "Title 1",
+    "content": "this is post 1",
+    "mode": "PRIVATE"
+}
+
+### Post Update
+PUT http://127.0.0.1:8000/api/v1/post/4 HTTP/1.1
+content-type: application/json
+Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNjI2NjkyMzgxLCJqdGkiOiI2MmJkOGVlYjlkOWU0MmMxOWZiZjExZjllOTVjZTlmOCIsInVzZXJfaWQiOjIxfQ.OJI-jBBxFYX_fDUZFWFiR5SXMvZNwcFDqlDp8QJuzLs
+
+{
+    "title": "Title 4",
+    "content": "this is post 4",
+    "mode": "PRIVATE"
+}
+
+### Post Detail
+GET http://127.0.0.1:8000/api/v1/post/4 HTTP/1.1
+content-type: application/json
+Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNjI2Njk4MzIxLCJqdGkiOiIzOGJhZmRhZjE1M2Q0YzdhODk4NWIxMDg1Zjg1NWNlZCIsInVzZXJfaWQiOjIxfQ.ppVi2B6C804uJNDdQMjOgqyC-SyPV1guPTVsxiTDx2I
+
+### Post List
+GET http://127.0.0.1:8000/api/v1/post HTTP/1.1
+content-type: application/json
+Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNjI2NzE2MDkxLCJqdGkiOiI0ZDM4M2VmYmQwYzU0OTY2OGVmOGE3MDg4NDNkOTNhOCIsInVzZXJfaWQiOjIxfQ.KWWRHyZYxylzyrqgxGoAAzAe0-_3TRoMQNbA55V0PyI
+
+### Post List
+GET http://127.0.0.1:8000/api/v1/post?page=1 HTTP/1.1
+content-type: application/json
+Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNjI2NzE2MDkxLCJqdGkiOiI0ZDM4M2VmYmQwYzU0OTY2OGVmOGE3MDg4NDNkOTNhOCIsInVzZXJfaWQiOjIxfQ.KWWRHyZYxylzyrqgxGoAAzAe0-_3TRoMQNbA55V0PyI
+
+### Post Delete
+DELETE http://127.0.0.1:8000/api/v1/post/4 HTTP/1.1
+content-type: application/json
+Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNjI2NjkyMzgxLCJqdGkiOiI2MmJkOGVlYjlkOWU0MmMxOWZiZjExZjllOTVjZTlmOCIsInVzZXJfaWQiOjIxfQ.OJI-jBBxFYX_fDUZFWFiR5SXMvZNwcFDqlDp8QJuzLs
+
+### Like Post 
+POST http://127.0.0.1:8000/api/v1/likepost/4 HTTP/1.1
+content-type: application/json
+Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNjI2NzE2MDkxLCJqdGkiOiI0ZDM4M2VmYmQwYzU0OTY2OGVmOGE3MDg4NDNkOTNhOCIsInVzZXJfaWQiOjIxfQ.KWWRHyZYxylzyrqgxGoAAzAe0-_3TRoMQNbA55V0PyI
+
+### Unlike Post 
+DELETE  http://127.0.0.1:8000/api/v1/likepost/4 HTTP/1.1
+content-type: application/json
+Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNjI2Njk4MzIxLCJqdGkiOiIzOGJhZmRhZjE1M2Q0YzdhODk4NWIxMDg1Zjg1NWNlZCIsInVzZXJfaWQiOjIxfQ.ppVi2B6C804uJNDdQMjOgqyC-SyPV1guPTVsxiTDx2I
+
+### Likepost list
+GET http://127.0.0.1:8000/api/v1/likepost/4 HTTP/1.1
+content-type: application/json
+Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNjI2NzEzMzg3LCJqdGkiOiI3NDQ0OTdhYjlhODk0ZWQ0YTM3Y2JkNWUyYTBiNjdjMyIsInVzZXJfaWQiOjIxfQ.pN8zgac30b_qVL1l4ZKe2_q7x0KQ6P7NTEkyUQrPAVA
+
+### Likepost list
+GET http://127.0.0.1:8000/api/v1/likepost/4?page=1 HTTP/1.1
+content-type: application/json
+Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNjI2NzEzMzg3LCJqdGkiOiI3NDQ0OTdhYjlhODk0ZWQ0YTM3Y2JkNWUyYTBiNjdjMyIsInVzZXJfaWQiOjIxfQ.pN8zgac30b_qVL1l4ZKe2_q7x0KQ6P7NTEkyUQrPAVA
+
+### Comment Create
+POST http://127.0.0.1:8000/api/v1/comment/4 HTTP/1.1
+content-type: application/json
+Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNjI2NzA2Njg4LCJqdGkiOiJjNDNlYWZjNjFjNzM0YTYxODBiMmJlODYxMDU5OGFlMSIsInVzZXJfaWQiOjIwfQ.qeMpHbZm6tdMA6QrJmP6Az8fkHtsbb5r-p-Ond5jWoM
+
+{
+    "content": "This is comment for 4 again again"
+}
+
+### Comment List
+GET http://127.0.0.1:8000/api/v1/comment/4 HTTP/1.1
+content-type: application/json
+Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNjI2NzEzMzg3LCJqdGkiOiI3NDQ0OTdhYjlhODk0ZWQ0YTM3Y2JkNWUyYTBiNjdjMyIsInVzZXJfaWQiOjIxfQ.pN8zgac30b_qVL1l4ZKe2_q7x0KQ6P7NTEkyUQrPAVA
+
+### Comment List
+GET http://127.0.0.1:8000/api/v1/comment/4?page=1 HTTP/1.1
+content-type: application/json
+Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNjI2NzEzMzg3LCJqdGkiOiI3NDQ0OTdhYjlhODk0ZWQ0YTM3Y2JkNWUyYTBiNjdjMyIsInVzZXJfaWQiOjIxfQ.pN8zgac30b_qVL1l4ZKe2_q7x0KQ6P7NTEkyUQrPAVA
+
+### Comment Update
+PUT http://127.0.0.1:8000/api/v1/comment/7 HTTP/1.1
+content-type: application/json
+Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNjI2NzA2Njg4LCJqdGkiOiJjNDNlYWZjNjFjNzM0YTYxODBiMmJlODYxMDU5OGFlMSIsInVzZXJfaWQiOjIwfQ.qeMpHbZm6tdMA6QrJmP6Az8fkHtsbb5r-p-Ond5jWoM
+
+{
+    "content": "This is comment for 7"
+}
+
+### Comment Delete
+DELETE  http://127.0.0.1:8000/api/v1/comment/5 HTTP/1.1
+content-type: application/json
+Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNjI2NzA2Njg4LCJqdGkiOiJjNDNlYWZjNjFjNzM0YTYxODBiMmJlODYxMDU5OGFlMSIsInVzZXJfaWQiOjIwfQ.qeMpHbZm6tdMA6QrJmP6Az8fkHtsbb5r-p-Ond5jWoM
+
+### Comment Sublist
+GET http://127.0.0.1:8000/api/v1/comment/4/sub/2 HTTP/1.1
+content-type: application/json
+Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNjI2NzEzMzg3LCJqdGkiOiI3NDQ0OTdhYjlhODk0ZWQ0YTM3Y2JkNWUyYTBiNjdjMyIsInVzZXJfaWQiOjIxfQ.pN8zgac30b_qVL1l4ZKe2_q7x0KQ6P7NTEkyUQrPAVA
+
+### Comment Sublist
+GET http://127.0.0.1:8000/api/v1/comment/4/sub/2?page=2 HTTP/1.1
+content-type: application/json
+Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNjI2NzEzMzg3LCJqdGkiOiI3NDQ0OTdhYjlhODk0ZWQ0YTM3Y2JkNWUyYTBiNjdjMyIsInVzZXJfaWQiOjIxfQ.pN8zgac30b_qVL1l4ZKe2_q7x0KQ6P7NTEkyUQrPAVA
+
+### Comment Create 2
+POST http://127.0.0.1:8000/api/v1/comment/4 HTTP/1.1
+content-type: application/json
+Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNjI2NzA2Njg4LCJqdGkiOiJjNDNlYWZjNjFjNzM0YTYxODBiMmJlODYxMDU5OGFlMSIsInVzZXJfaWQiOjIwfQ.qeMpHbZm6tdMA6QrJmP6Az8fkHtsbb5r-p-Ond5jWoM
+
+{
+    "content": "This is comment for 4 again again",
+    "parent_comment": 2
+}

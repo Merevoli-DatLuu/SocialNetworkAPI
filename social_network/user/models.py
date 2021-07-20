@@ -1,6 +1,5 @@
 from django.db import models
 from django.contrib.auth.models import AbstractBaseUser
-from django.db.models.fields import CharField
 
 from .managers import UserManager
 from .validators import validate_secure_email, validate_age
@@ -8,8 +7,8 @@ from .validators import validate_secure_email, validate_age
 class User(AbstractBaseUser):
     email           = models.EmailField(max_length=100, unique=True)
     first_name      = models.CharField(max_length=50)
-    last_name       = models.CharField(max_length=50)
-    age             = models.PositiveIntegerField(validators=[validate_age])
+    last_name       = models.CharField(max_length=50, null=True)
+    age             = models.PositiveIntegerField(validators=[validate_age], null=True)
     password        = models.CharField(max_length=100, validators=[validate_secure_email])
     is_verified     = models.BooleanField(default=False)
 
