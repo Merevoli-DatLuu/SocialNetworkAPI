@@ -12,7 +12,9 @@ djangorestframework-simplejwt = "*"
 pyotp = "*"
 dj-rest-auth = "*"
 django-allauth = "*"
-celery = "*"
+celery = {extras = ["redis"],version = "*"}
+redis = "*"
+kombu = "*"
 
 [requires]
 python_version = "3.7"
