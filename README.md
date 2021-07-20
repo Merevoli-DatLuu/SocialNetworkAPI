@@ -5,6 +5,15 @@
   
 </div>
 
+---
+
+- [API Diagrams](#api-diagrams)
+- [Database Diagram](#database-diagram)
+- [Accounts](#accounts)
+- [API Document](#api-document)
+
+---
+
 ## API Diagrams
 
 ```
@@ -45,6 +54,10 @@ Comment
 /api/v1/comment/<post_id>/sub/<comment_id>   # GET: Get All Subcomments  
 ```
 
+## Database Diagram
+
+![](https://github.com/Merevoli-DatLuu/SocialNetworkAPI/blob/master/preview/SQLDiagram.png)
+
 ## Accounts
 
 | STT | email                   | password         | note  |
@@ -56,6 +69,7 @@ Comment
 ## API Document
 [API Document](https://github.com/Merevoli-DatLuu/SocialNetworkAPI/wiki/API-Documentation-V1)
 
+<!--
 ## Demo
 [Demo](https://replit.com/join/odwfilaepm-merevolidatluu)
 
@@ -63,3 +77,4 @@ Comment
 > + Kiểm tra xem pipenv đã được cài đặt chưa. Nếu rồi thì không cần cài đặt gì thêm
 
 ![](https://github.com/Merevoli-DatLuu/SocialNetworkAPI/blob/master/preview/demo.png)
+-->
