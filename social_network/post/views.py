@@ -1,4 +1,4 @@
-from django.http import JsonResponse, Http404
+from django.http import Http404
 
 from rest_framework import viewsets, status
 from rest_framework.response import Response
@@ -14,96 +14,29 @@ from .utils import total_comment, total_likes, have_liked
 
 class PostViewSet(viewsets.ModelViewSet):
     serializer_class = PostSerializer
-    model = Post
     pagination_class = PageNumberPagination
+    queryset = Post.objects.all()
     
     def get_permissions(self):
-        permission_classes = [UserVerifyPermission]
+        self.permission_classes = [UserVerifyPermission]
         if self.action in ('update', 'destroy'):
-            permission_classes += [PostCurrentUserPermission]
-            
-        return [permission() for permission in permission_classes]
+            self.permission_classes += [PostCurrentUserPermission]
+        return super().get_permissions()
     
     def get_serializer_class(self):
-        serializer_class = self.serializer_class
-        if self.request.method == 'PUT':
-            serializer_class = PostUpdateSerializer
-            
-        return serializer_class
-    
-    def get_object(self, pk):
-        try:
-            return Post.objects.get(pk=pk)
-        except Post.DoesNotExist:
-            raise Http404
-        
-    def list(self, request):
-        posts = Post.objects.all()
-        page = self.paginate_queryset(posts)
-        serializer = self.get_serializer_class()(page, many=True)
-        response = self.get_paginated_response(serializer.data)
-        response.data = {
-            'status': 'success',
-            'message': 'list all posts succesfully',
-            **response.data
-        }
-        return response
-
-    def create(self, request):
-        serializer = self.get_serializer_class()(data = request.data, context={'request': request})
-        if serializer.is_valid():
-            serializer.save()
-            
-            return Response({
-                'status': 'success',
-                'message': 'add a new post succesfully',
-                'data': serializer.data
-            }, status=status.HTTP_201_CREATED)
-            
-        return Response({
-            'status': 'error',
-            'message': serializer.errors
-        }, status=status.HTTP_400_BAD_REQUEST)
+        self.serializer_class = self.serializer_class
+        if self.action == 'update':
+            self.serializer_class = PostUpdateSerializer
+        return super().get_serializer_class()
 
     def retrieve(self, request, pk=None):
-        post = self.get_object(pk)
-        serializer = self.get_serializer_class()(post)
-        data = serializer.data
-        data['total_of_likes'] = total_likes(pk)
-        data['total_of_comment'] = total_comment(pk)
-        data['is_liked'] = have_liked(pk, request.user.id)
-        
-        return Response({
-            'status': 'success',
-            'message': 'get a post succesfully',
-            'data': data
-        }, status=status.HTTP_200_OK)
-
-    def update(self, request, pk=None):
-        post = self.get_object(pk)
-        serializer = self.get_serializer_class()(post, data = request.data)
-        if serializer.is_valid():
-            serializer.save()
-            
-            return Response({
-                'status': 'success',
-                'message': 'update a new post succesfully',
-                'data': serializer.data
-            }, status=status.HTTP_201_CREATED)   
-            
-        return Response({
-            'status': 'error',
-            'message': serializer.errors
-        }, status=status.HTTP_400_BAD_REQUEST)
-               
-    def destroy(self, request, pk=None):
-        post = self.get_object(pk)
-        post.delete()
-        
-        return JsonResponse({
-            'status': 'success',
-            'message': "Delete post successfully",
-        }, status=status.HTTP_200_OK, safe=False)
+        response = super().retrieve(request, pk)
+        response.data.update({
+            'total_of_likes': total_likes(pk),
+            'total_of_comment': total_comment(pk),
+            'is_liked': have_liked(pk, request.user.id)
+        })   
+        return response
     
 
 class LikePostViewSet(viewsets.ModelViewSet):
@@ -111,99 +44,66 @@ class LikePostViewSet(viewsets.ModelViewSet):
     serializer_class = LikePostSerilizer
     model = LikePost
     pagination_class = PageNumberPagination
+    queryset = Post.objects.all()
     
-    def get_object(self, post_id, user_id):
+    def get_object(self):
+        post_id = self.kwargs.get('post_id', None)
+        user_id = self.request.user.id
         try:
             return LikePost.objects.get(post_id=post_id, user_id=user_id)
         except LikePost.DoesNotExist:
             raise Http404
     
     def create(self, request, post_id=None):
-        serializer = self.serializer_class(data = {
+        serializer = self.get_serializer(data = {
             'post_id': post_id,
             'user_id': request.user.id
         })
-        if serializer.is_valid():
-            serializer.save()
-            
-            return Response({
-                'status': 'success',
-                'message': 'like succesfully',
-                'data': serializer.data
-            }, status=status.HTTP_201_CREATED)
-            
-        return Response({
-            'status': 'error',
-            'message': serializer.errors
-        }, status=status.HTTP_400_BAD_REQUEST)
-    
-    def destroy(self, request, post_id=None):
-        likepost = self.get_object(post_id, request.user.id)
-        likepost.delete()
+        serializer.is_valid(raise_exception=True)
+        serializer.save()
         
-        return JsonResponse({
-            'status': 'success',
-            'message': "unlike successfully",
-        }, status=status.HTTP_200_OK, safe=False)
+        return Response(serializer.data, status=status.HTTP_201_CREATED)
     
     def list(self, request, post_id):
         likeposts = self.model.objects.filter(post_id=post_id)
         users = [likepost.user_id for likepost in likeposts]
         page = self.paginate_queryset(users)
         serializer = UserSerializer(page, many=True)
-        
         response = self.get_paginated_response(serializer.data)
-        response.data = {
-            'status': 'success',
-            'message': 'list all user that liked post succesfully',
-            **response.data
-        }
+        
         return response
-
+        
 
 class CommentViewSet(viewsets.ModelViewSet):
     permission_classes = [UserVerifyPermission]
     serializer_class = CommentSerilizer
-    model = Comment
     pagination_class = PageNumberPagination
+    queryset = Comment.objects.all()
     
     def get_serializer_class(self):
-        serializer_class = self.serializer_class
-        if self.request.method == 'PUT':
-            serializer_class = CommentUpdateSerilizer
-            
-        return serializer_class
-    
-    def get_object(self, comment_id):
-        try:
-            return Comment.objects.get(pk=comment_id)
-        except Comment.DoesNotExist:
-            raise Http404
+        self.serializer_class = self.serializer_class
+        if self.action == 'update':
+            self.serializer_class = CommentUpdateSerilizer
+        return super().get_serializer_class()
         
-    def list_comments(self, request, pk=None):
-        comments = self.model.objects.filter(post_id=pk, parent_comment=None)
-        page = self.paginate_queryset(comments)
-        serializer = self.get_serializer_class()(page, many=True)
-        response = self.get_paginated_response(serializer.data)
-        response.data = {
-            'status': 'success',
-            'message': 'list all comment succesfully',
-            **response.data
-        }
-        return response
+    def filter_queryset(self, queryset):
+        queryset = super().filter_queryset(queryset)
+        
+        if self.action == "list_comments":
+            pk = self.kwargs['pk']
+            queryset = queryset.filter(post_id=pk, parent_comment=None)
+        elif self.action == "list_sub_comments":
+            post_id = self.kwargs['post_id']
+            comment_id = self.kwargs['comment_id']
+            queryset = queryset.filter(post_id=post_id, parent_comment=comment_id)
             
+        return queryset
     
+    def list_comments(self, request, pk=None):
+        return super().list(request, pk)
+            
     def list_sub_comments(self, request, post_id=None, comment_id=None):
-        comments = self.model.objects.filter(post_id=post_id, parent_comment=comment_id)
-        page = self.paginate_queryset(comments)
-        serializer = self.get_serializer_class()(page, many=True)
-        response = self.get_paginated_response(serializer.data)
-        response.data = {
-            'status': 'success',
-            'message': 'list all comment succesfully',
-            **response.data
-        }
-        return response
+        return super().list(request, post_id, comment_id)
     
     def create(self, request, pk=None):
         serializer = self.get_serializer_class()(data = {
@@ -211,45 +111,9 @@ class CommentViewSet(viewsets.ModelViewSet):
             'user_id': request.user.id,
             **request.data
         })
-        if serializer.is_valid():
-            serializer.save()
-            
-            return Response({
-                'status': 'success',
-                'message': 'like succesfully',
-                'data': serializer.data
-            }, status=status.HTTP_201_CREATED)
-            
-        return Response({
-            'status': 'error',
-            'message': serializer.errors
-        }, status=status.HTTP_400_BAD_REQUEST)
-    
-    def update(self, request, pk=None):
-        comment = self.get_object(pk)
-        serializer = self.get_serializer_class()(comment, data = request.data)
-        if serializer.is_valid():
-            serializer.save()
-            
-            return Response({
-                'status': 'success',
-                'message': 'update a new post succesfully',
-                'data': serializer.data
-            }, status=status.HTTP_201_CREATED) 
-              
-        return Response({
-            'status': 'error',
-            'message': serializer.errors
-        }, status=status.HTTP_400_BAD_REQUEST)
-    
-    def destroy(self, request, pk=None):
-        comment = self.get_object(pk)
-        comment.delete()
-        
-        return JsonResponse({
-            'status': 'success',
-            'message': "delete comment successfully",
-        }, status=status.HTTP_200_OK, safe=False)
+        serializer.is_valid(raise_exception=True)
+        serializer.save()
+        return Response(serializer.data, status=status.HTTP_201_CREATED)
 
 
 post_list = PostViewSet.as_view({

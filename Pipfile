@@ -15,6 +15,7 @@ django-allauth = "*"
 celery = {extras = ["redis"],version = "*"}
 redis = "*"
 kombu = "*"
+psycopg2 = "*"
 
 [requires]
 python_version = "3.7"
