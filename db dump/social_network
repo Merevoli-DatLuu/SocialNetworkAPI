@@ -1,0 +1,2032 @@
+--
+-- PostgreSQL database dump
+--
+
+-- Dumped from database version 10.17
+-- Dumped by pg_dump version 10.17
+
+-- Started on 2021-07-20 16:53:28
+
+SET statement_timeout = 0;
+SET lock_timeout = 0;
+SET idle_in_transaction_session_timeout = 0;
+SET client_encoding = 'UTF8';
+SET standard_conforming_strings = on;
+SELECT pg_catalog.set_config('search_path', '', false);
+SET check_function_bodies = false;
+SET xmloption = content;
+SET client_min_messages = warning;
+SET row_security = off;
+
+--
+-- TOC entry 1 (class 3079 OID 12924)
+-- Name: plpgsql; Type: EXTENSION; Schema: -; Owner: 
+--
+
+CREATE EXTENSION IF NOT EXISTS plpgsql WITH SCHEMA pg_catalog;
+
+
+--
+-- TOC entry 3073 (class 0 OID 0)
+-- Dependencies: 1
+-- Name: EXTENSION plpgsql; Type: COMMENT; Schema: -; Owner: 
+--
+
+COMMENT ON EXTENSION plpgsql IS 'PL/pgSQL procedural language';
+
+
+SET default_tablespace = '';
+
+SET default_with_oids = false;
+
+--
+-- TOC entry 200 (class 1259 OID 16415)
+-- Name: account_emailaddress; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE public.account_emailaddress (
+    id bigint NOT NULL,
+    email character varying(254) NOT NULL,
+    verified boolean NOT NULL,
+    "primary" boolean NOT NULL,
+    user_id bigint NOT NULL
+);
+
+
+ALTER TABLE public.account_emailaddress OWNER TO postgres;
+
+--
+-- TOC entry 202 (class 1259 OID 16460)
+-- Name: account_emailaddress_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE public.account_emailaddress_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.account_emailaddress_id_seq OWNER TO postgres;
+
+--
+-- TOC entry 3074 (class 0 OID 0)
+-- Dependencies: 202
+-- Name: account_emailaddress_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+--
+
+ALTER SEQUENCE public.account_emailaddress_id_seq OWNED BY public.account_emailaddress.id;
+
+
+--
+-- TOC entry 201 (class 1259 OID 16425)
+-- Name: account_emailconfirmation; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE public.account_emailconfirmation (
+    id bigint NOT NULL,
+    created timestamp with time zone NOT NULL,
+    sent timestamp with time zone,
+    key character varying(64) NOT NULL,
+    email_address_id bigint NOT NULL
+);
+
+
+ALTER TABLE public.account_emailconfirmation OWNER TO postgres;
+
+--
+-- TOC entry 203 (class 1259 OID 16486)
+-- Name: account_emailconfirmation_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE public.account_emailconfirmation_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.account_emailconfirmation_id_seq OWNER TO postgres;
+
+--
+-- TOC entry 3075 (class 0 OID 0)
+-- Dependencies: 203
+-- Name: account_emailconfirmation_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+--
+
+ALTER SEQUENCE public.account_emailconfirmation_id_seq OWNED BY public.account_emailconfirmation.id;
+
+
+--
+-- TOC entry 211 (class 1259 OID 16533)
+-- Name: auth_group; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE public.auth_group (
+    id integer NOT NULL,
+    name character varying(150) NOT NULL
+);
+
+
+ALTER TABLE public.auth_group OWNER TO postgres;
+
+--
+-- TOC entry 210 (class 1259 OID 16531)
+-- Name: auth_group_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE public.auth_group_id_seq
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.auth_group_id_seq OWNER TO postgres;
+
+--
+-- TOC entry 3076 (class 0 OID 0)
+-- Dependencies: 210
+-- Name: auth_group_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+--
+
+ALTER SEQUENCE public.auth_group_id_seq OWNED BY public.auth_group.id;
+
+
+--
+-- TOC entry 213 (class 1259 OID 16543)
+-- Name: auth_group_permissions; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE public.auth_group_permissions (
+    id bigint NOT NULL,
+    group_id integer NOT NULL,
+    permission_id integer NOT NULL
+);
+
+
+ALTER TABLE public.auth_group_permissions OWNER TO postgres;
+
+--
+-- TOC entry 212 (class 1259 OID 16541)
+-- Name: auth_group_permissions_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE public.auth_group_permissions_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.auth_group_permissions_id_seq OWNER TO postgres;
+
+--
+-- TOC entry 3077 (class 0 OID 0)
+-- Dependencies: 212
+-- Name: auth_group_permissions_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+--
+
+ALTER SEQUENCE public.auth_group_permissions_id_seq OWNED BY public.auth_group_permissions.id;
+
+
+--
+-- TOC entry 209 (class 1259 OID 16525)
+-- Name: auth_permission; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE public.auth_permission (
+    id integer NOT NULL,
+    name character varying(255) NOT NULL,
+    content_type_id integer NOT NULL,
+    codename character varying(100) NOT NULL
+);
+
+
+ALTER TABLE public.auth_permission OWNER TO postgres;
+
+--
+-- TOC entry 208 (class 1259 OID 16523)
+-- Name: auth_permission_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE public.auth_permission_id_seq
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.auth_permission_id_seq OWNER TO postgres;
+
+--
+-- TOC entry 3078 (class 0 OID 0)
+-- Dependencies: 208
+-- Name: auth_permission_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+--
+
+ALTER SEQUENCE public.auth_permission_id_seq OWNED BY public.auth_permission.id;
+
+
+--
+-- TOC entry 214 (class 1259 OID 16575)
+-- Name: authtoken_token; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE public.authtoken_token (
+    key character varying(40) NOT NULL,
+    created timestamp with time zone NOT NULL,
+    user_id bigint NOT NULL
+);
+
+
+ALTER TABLE public.authtoken_token OWNER TO postgres;
+
+--
+-- TOC entry 207 (class 1259 OID 16501)
+-- Name: django_admin_log; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE public.django_admin_log (
+    id integer NOT NULL,
+    action_time timestamp with time zone NOT NULL,
+    object_id text,
+    object_repr character varying(200) NOT NULL,
+    action_flag smallint NOT NULL,
+    change_message text NOT NULL,
+    content_type_id integer,
+    user_id bigint NOT NULL,
+    CONSTRAINT django_admin_log_action_flag_check CHECK ((action_flag >= 0))
+);
+
+
+ALTER TABLE public.django_admin_log OWNER TO postgres;
+
+--
+-- TOC entry 206 (class 1259 OID 16499)
+-- Name: django_admin_log_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE public.django_admin_log_id_seq
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.django_admin_log_id_seq OWNER TO postgres;
+
+--
+-- TOC entry 3079 (class 0 OID 0)
+-- Dependencies: 206
+-- Name: django_admin_log_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+--
+
+ALTER SEQUENCE public.django_admin_log_id_seq OWNED BY public.django_admin_log.id;
+
+
+--
+-- TOC entry 205 (class 1259 OID 16491)
+-- Name: django_content_type; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE public.django_content_type (
+    id integer NOT NULL,
+    app_label character varying(100) NOT NULL,
+    model character varying(100) NOT NULL
+);
+
+
+ALTER TABLE public.django_content_type OWNER TO postgres;
+
+--
+-- TOC entry 204 (class 1259 OID 16489)
+-- Name: django_content_type_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE public.django_content_type_id_seq
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.django_content_type_id_seq OWNER TO postgres;
+
+--
+-- TOC entry 3080 (class 0 OID 0)
+-- Dependencies: 204
+-- Name: django_content_type_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+--
+
+ALTER SEQUENCE public.django_content_type_id_seq OWNED BY public.django_content_type.id;
+
+
+--
+-- TOC entry 197 (class 1259 OID 16396)
+-- Name: django_migrations; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE public.django_migrations (
+    id bigint NOT NULL,
+    app character varying(255) NOT NULL,
+    name character varying(255) NOT NULL,
+    applied timestamp with time zone NOT NULL
+);
+
+
+ALTER TABLE public.django_migrations OWNER TO postgres;
+
+--
+-- TOC entry 196 (class 1259 OID 16394)
+-- Name: django_migrations_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE public.django_migrations_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.django_migrations_id_seq OWNER TO postgres;
+
+--
+-- TOC entry 3081 (class 0 OID 0)
+-- Dependencies: 196
+-- Name: django_migrations_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+--
+
+ALTER SEQUENCE public.django_migrations_id_seq OWNED BY public.django_migrations.id;
+
+
+--
+-- TOC entry 221 (class 1259 OID 16663)
+-- Name: django_session; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE public.django_session (
+    session_key character varying(40) NOT NULL,
+    session_data text NOT NULL,
+    expire_date timestamp with time zone NOT NULL
+);
+
+
+ALTER TABLE public.django_session OWNER TO postgres;
+
+--
+-- TOC entry 223 (class 1259 OID 16675)
+-- Name: django_site; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE public.django_site (
+    id integer NOT NULL,
+    domain character varying(100) NOT NULL,
+    name character varying(50) NOT NULL
+);
+
+
+ALTER TABLE public.django_site OWNER TO postgres;
+
+--
+-- TOC entry 222 (class 1259 OID 16673)
+-- Name: django_site_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE public.django_site_id_seq
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.django_site_id_seq OWNER TO postgres;
+
+--
+-- TOC entry 3082 (class 0 OID 0)
+-- Dependencies: 222
+-- Name: django_site_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+--
+
+ALTER SEQUENCE public.django_site_id_seq OWNED BY public.django_site.id;
+
+
+--
+-- TOC entry 220 (class 1259 OID 16620)
+-- Name: post_comment; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE public.post_comment (
+    id bigint NOT NULL,
+    content character varying(1024) NOT NULL,
+    parent_comment_id bigint,
+    post_id_id bigint NOT NULL,
+    user_id_id bigint NOT NULL
+);
+
+
+ALTER TABLE public.post_comment OWNER TO postgres;
+
+--
+-- TOC entry 219 (class 1259 OID 16618)
+-- Name: post_comment_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE public.post_comment_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.post_comment_id_seq OWNER TO postgres;
+
+--
+-- TOC entry 3083 (class 0 OID 0)
+-- Dependencies: 219
+-- Name: post_comment_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+--
+
+ALTER SEQUENCE public.post_comment_id_seq OWNED BY public.post_comment.id;
+
+
+--
+-- TOC entry 218 (class 1259 OID 16612)
+-- Name: post_likepost; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE public.post_likepost (
+    id bigint NOT NULL,
+    post_id_id bigint NOT NULL,
+    user_id_id bigint NOT NULL
+);
+
+
+ALTER TABLE public.post_likepost OWNER TO postgres;
+
+--
+-- TOC entry 217 (class 1259 OID 16610)
+-- Name: post_likepost_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE public.post_likepost_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.post_likepost_id_seq OWNER TO postgres;
+
+--
+-- TOC entry 3084 (class 0 OID 0)
+-- Dependencies: 217
+-- Name: post_likepost_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+--
+
+ALTER SEQUENCE public.post_likepost_id_seq OWNED BY public.post_likepost.id;
+
+
+--
+-- TOC entry 216 (class 1259 OID 16590)
+-- Name: post_post; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE public.post_post (
+    id bigint NOT NULL,
+    title character varying(200) NOT NULL,
+    content character varying(1024) NOT NULL,
+    mode character varying(10) NOT NULL,
+    date_of_creation timestamp with time zone NOT NULL,
+    date_of_modification timestamp with time zone NOT NULL,
+    user_id_id bigint
+);
+
+
+ALTER TABLE public.post_post OWNER TO postgres;
+
+--
+-- TOC entry 215 (class 1259 OID 16588)
+-- Name: post_post_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE public.post_post_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.post_post_id_seq OWNER TO postgres;
+
+--
+-- TOC entry 3085 (class 0 OID 0)
+-- Dependencies: 215
+-- Name: post_post_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+--
+
+ALTER SEQUENCE public.post_post_id_seq OWNED BY public.post_post.id;
+
+
+--
+-- TOC entry 224 (class 1259 OID 16686)
+-- Name: socialaccount_socialaccount; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE public.socialaccount_socialaccount (
+    id bigint NOT NULL,
+    provider character varying(30) NOT NULL,
+    uid character varying(191) NOT NULL,
+    last_login timestamp with time zone NOT NULL,
+    date_joined timestamp with time zone NOT NULL,
+    extra_data text NOT NULL,
+    user_id bigint NOT NULL
+);
+
+
+ALTER TABLE public.socialaccount_socialaccount OWNER TO postgres;
+
+--
+-- TOC entry 229 (class 1259 OID 16773)
+-- Name: socialaccount_socialaccount_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE public.socialaccount_socialaccount_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.socialaccount_socialaccount_id_seq OWNER TO postgres;
+
+--
+-- TOC entry 3086 (class 0 OID 0)
+-- Dependencies: 229
+-- Name: socialaccount_socialaccount_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+--
+
+ALTER SEQUENCE public.socialaccount_socialaccount_id_seq OWNED BY public.socialaccount_socialaccount.id;
+
+
+--
+-- TOC entry 225 (class 1259 OID 16697)
+-- Name: socialaccount_socialapp; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE public.socialaccount_socialapp (
+    id bigint NOT NULL,
+    provider character varying(30) NOT NULL,
+    name character varying(40) NOT NULL,
+    client_id character varying(191) NOT NULL,
+    secret character varying(191) NOT NULL,
+    key character varying(191) NOT NULL
+);
+
+
+ALTER TABLE public.socialaccount_socialapp OWNER TO postgres;
+
+--
+-- TOC entry 230 (class 1259 OID 16804)
+-- Name: socialaccount_socialapp_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE public.socialaccount_socialapp_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.socialaccount_socialapp_id_seq OWNER TO postgres;
+
+--
+-- TOC entry 3087 (class 0 OID 0)
+-- Dependencies: 230
+-- Name: socialaccount_socialapp_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+--
+
+ALTER SEQUENCE public.socialaccount_socialapp_id_seq OWNED BY public.socialaccount_socialapp.id;
+
+
+--
+-- TOC entry 227 (class 1259 OID 16705)
+-- Name: socialaccount_socialapp_sites; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE public.socialaccount_socialapp_sites (
+    id bigint NOT NULL,
+    socialapp_id bigint NOT NULL,
+    site_id integer NOT NULL
+);
+
+
+ALTER TABLE public.socialaccount_socialapp_sites OWNER TO postgres;
+
+--
+-- TOC entry 226 (class 1259 OID 16703)
+-- Name: socialaccount_socialapp_sites_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE public.socialaccount_socialapp_sites_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.socialaccount_socialapp_sites_id_seq OWNER TO postgres;
+
+--
+-- TOC entry 3088 (class 0 OID 0)
+-- Dependencies: 226
+-- Name: socialaccount_socialapp_sites_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+--
+
+ALTER SEQUENCE public.socialaccount_socialapp_sites_id_seq OWNED BY public.socialaccount_socialapp_sites.id;
+
+
+--
+-- TOC entry 228 (class 1259 OID 16713)
+-- Name: socialaccount_socialtoken; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE public.socialaccount_socialtoken (
+    id bigint NOT NULL,
+    token text NOT NULL,
+    token_secret text NOT NULL,
+    expires_at timestamp with time zone,
+    account_id bigint NOT NULL,
+    app_id bigint NOT NULL
+);
+
+
+ALTER TABLE public.socialaccount_socialtoken OWNER TO postgres;
+
+--
+-- TOC entry 231 (class 1259 OID 16848)
+-- Name: socialaccount_socialtoken_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE public.socialaccount_socialtoken_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.socialaccount_socialtoken_id_seq OWNER TO postgres;
+
+--
+-- TOC entry 3089 (class 0 OID 0)
+-- Dependencies: 231
+-- Name: socialaccount_socialtoken_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+--
+
+ALTER SEQUENCE public.socialaccount_socialtoken_id_seq OWNED BY public.socialaccount_socialtoken.id;
+
+
+--
+-- TOC entry 199 (class 1259 OID 16407)
+-- Name: user_user; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE public.user_user (
+    id bigint NOT NULL,
+    password character varying(100) NOT NULL,
+    last_login timestamp with time zone NOT NULL,
+    age integer,
+    date_joined timestamp with time zone NOT NULL,
+    email character varying(100) NOT NULL,
+    first_name character varying(50) NOT NULL,
+    is_active boolean NOT NULL,
+    is_admin boolean NOT NULL,
+    is_staff boolean NOT NULL,
+    is_superuser boolean NOT NULL,
+    last_name character varying(50),
+    is_verified boolean NOT NULL,
+    CONSTRAINT user_user_age_check CHECK ((age >= 0))
+);
+
+
+ALTER TABLE public.user_user OWNER TO postgres;
+
+--
+-- TOC entry 198 (class 1259 OID 16405)
+-- Name: user_user_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE public.user_user_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.user_user_id_seq OWNER TO postgres;
+
+--
+-- TOC entry 3090 (class 0 OID 0)
+-- Dependencies: 198
+-- Name: user_user_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+--
+
+ALTER SEQUENCE public.user_user_id_seq OWNED BY public.user_user.id;
+
+
+--
+-- TOC entry 2785 (class 2604 OID 16462)
+-- Name: account_emailaddress id; Type: DEFAULT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.account_emailaddress ALTER COLUMN id SET DEFAULT nextval('public.account_emailaddress_id_seq'::regclass);
+
+
+--
+-- TOC entry 2786 (class 2604 OID 16488)
+-- Name: account_emailconfirmation id; Type: DEFAULT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.account_emailconfirmation ALTER COLUMN id SET DEFAULT nextval('public.account_emailconfirmation_id_seq'::regclass);
+
+
+--
+-- TOC entry 2791 (class 2604 OID 16536)
+-- Name: auth_group id; Type: DEFAULT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.auth_group ALTER COLUMN id SET DEFAULT nextval('public.auth_group_id_seq'::regclass);
+
+
+--
+-- TOC entry 2792 (class 2604 OID 16546)
+-- Name: auth_group_permissions id; Type: DEFAULT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.auth_group_permissions ALTER COLUMN id SET DEFAULT nextval('public.auth_group_permissions_id_seq'::regclass);
+
+
+--
+-- TOC entry 2790 (class 2604 OID 16528)
+-- Name: auth_permission id; Type: DEFAULT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.auth_permission ALTER COLUMN id SET DEFAULT nextval('public.auth_permission_id_seq'::regclass);
+
+
+--
+-- TOC entry 2788 (class 2604 OID 16504)
+-- Name: django_admin_log id; Type: DEFAULT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.django_admin_log ALTER COLUMN id SET DEFAULT nextval('public.django_admin_log_id_seq'::regclass);
+
+
+--
+-- TOC entry 2787 (class 2604 OID 16494)
+-- Name: django_content_type id; Type: DEFAULT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.django_content_type ALTER COLUMN id SET DEFAULT nextval('public.django_content_type_id_seq'::regclass);
+
+
+--
+-- TOC entry 2782 (class 2604 OID 16399)
+-- Name: django_migrations id; Type: DEFAULT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.django_migrations ALTER COLUMN id SET DEFAULT nextval('public.django_migrations_id_seq'::regclass);
+
+
+--
+-- TOC entry 2796 (class 2604 OID 16678)
+-- Name: django_site id; Type: DEFAULT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.django_site ALTER COLUMN id SET DEFAULT nextval('public.django_site_id_seq'::regclass);
+
+
+--
+-- TOC entry 2795 (class 2604 OID 16623)
+-- Name: post_comment id; Type: DEFAULT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.post_comment ALTER COLUMN id SET DEFAULT nextval('public.post_comment_id_seq'::regclass);
+
+
+--
+-- TOC entry 2794 (class 2604 OID 16615)
+-- Name: post_likepost id; Type: DEFAULT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.post_likepost ALTER COLUMN id SET DEFAULT nextval('public.post_likepost_id_seq'::regclass);
+
+
+--
+-- TOC entry 2793 (class 2604 OID 16593)
+-- Name: post_post id; Type: DEFAULT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.post_post ALTER COLUMN id SET DEFAULT nextval('public.post_post_id_seq'::regclass);
+
+
+--
+-- TOC entry 2797 (class 2604 OID 16775)
+-- Name: socialaccount_socialaccount id; Type: DEFAULT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.socialaccount_socialaccount ALTER COLUMN id SET DEFAULT nextval('public.socialaccount_socialaccount_id_seq'::regclass);
+
+
+--
+-- TOC entry 2798 (class 2604 OID 16806)
+-- Name: socialaccount_socialapp id; Type: DEFAULT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.socialaccount_socialapp ALTER COLUMN id SET DEFAULT nextval('public.socialaccount_socialapp_id_seq'::regclass);
+
+
+--
+-- TOC entry 2799 (class 2604 OID 16708)
+-- Name: socialaccount_socialapp_sites id; Type: DEFAULT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.socialaccount_socialapp_sites ALTER COLUMN id SET DEFAULT nextval('public.socialaccount_socialapp_sites_id_seq'::regclass);
+
+
+--
+-- TOC entry 2800 (class 2604 OID 16850)
+-- Name: socialaccount_socialtoken id; Type: DEFAULT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.socialaccount_socialtoken ALTER COLUMN id SET DEFAULT nextval('public.socialaccount_socialtoken_id_seq'::regclass);
+
+
+--
+-- TOC entry 2783 (class 2604 OID 16410)
+-- Name: user_user id; Type: DEFAULT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.user_user ALTER COLUMN id SET DEFAULT nextval('public.user_user_id_seq'::regclass);
+
+
+--
+-- TOC entry 3034 (class 0 OID 16415)
+-- Dependencies: 200
+-- Data for Name: account_emailaddress; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY public.account_emailaddress (id, email, verified, "primary", user_id) FROM stdin;
+\.
+
+
+--
+-- TOC entry 3035 (class 0 OID 16425)
+-- Dependencies: 201
+-- Data for Name: account_emailconfirmation; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY public.account_emailconfirmation (id, created, sent, key, email_address_id) FROM stdin;
+\.
+
+
+--
+-- TOC entry 3045 (class 0 OID 16533)
+-- Dependencies: 211
+-- Data for Name: auth_group; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY public.auth_group (id, name) FROM stdin;
+\.
+
+
+--
+-- TOC entry 3047 (class 0 OID 16543)
+-- Dependencies: 213
+-- Data for Name: auth_group_permissions; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY public.auth_group_permissions (id, group_id, permission_id) FROM stdin;
+\.
+
+
+--
+-- TOC entry 3043 (class 0 OID 16525)
+-- Dependencies: 209
+-- Data for Name: auth_permission; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY public.auth_permission (id, name, content_type_id, codename) FROM stdin;
+1	Can add log entry	1	add_logentry
+2	Can change log entry	1	change_logentry
+3	Can delete log entry	1	delete_logentry
+4	Can view log entry	1	view_logentry
+5	Can add permission	2	add_permission
+6	Can change permission	2	change_permission
+7	Can delete permission	2	delete_permission
+8	Can view permission	2	view_permission
+9	Can add group	3	add_group
+10	Can change group	3	change_group
+11	Can delete group	3	delete_group
+12	Can view group	3	view_group
+13	Can add content type	4	add_contenttype
+14	Can change content type	4	change_contenttype
+15	Can delete content type	4	delete_contenttype
+16	Can view content type	4	view_contenttype
+17	Can add session	5	add_session
+18	Can change session	5	change_session
+19	Can delete session	5	delete_session
+20	Can view session	5	view_session
+21	Can add site	6	add_site
+22	Can change site	6	change_site
+23	Can delete site	6	delete_site
+24	Can view site	6	view_site
+25	Can add Token	7	add_token
+26	Can change Token	7	change_token
+27	Can delete Token	7	delete_token
+28	Can view Token	7	view_token
+29	Can add token	8	add_tokenproxy
+30	Can change token	8	change_tokenproxy
+31	Can delete token	8	delete_tokenproxy
+32	Can view token	8	view_tokenproxy
+33	Can add email address	9	add_emailaddress
+34	Can change email address	9	change_emailaddress
+35	Can delete email address	9	delete_emailaddress
+36	Can view email address	9	view_emailaddress
+37	Can add email confirmation	10	add_emailconfirmation
+38	Can change email confirmation	10	change_emailconfirmation
+39	Can delete email confirmation	10	delete_emailconfirmation
+40	Can view email confirmation	10	view_emailconfirmation
+41	Can add social account	11	add_socialaccount
+42	Can change social account	11	change_socialaccount
+43	Can delete social account	11	delete_socialaccount
+44	Can view social account	11	view_socialaccount
+45	Can add social application	12	add_socialapp
+46	Can change social application	12	change_socialapp
+47	Can delete social application	12	delete_socialapp
+48	Can view social application	12	view_socialapp
+49	Can add social application token	13	add_socialtoken
+50	Can change social application token	13	change_socialtoken
+51	Can delete social application token	13	delete_socialtoken
+52	Can view social application token	13	view_socialtoken
+53	Can add user	14	add_user
+54	Can change user	14	change_user
+55	Can delete user	14	delete_user
+56	Can view user	14	view_user
+57	Can add post	15	add_post
+58	Can change post	15	change_post
+59	Can delete post	15	delete_post
+60	Can view post	15	view_post
+61	Can add like post	16	add_likepost
+62	Can change like post	16	change_likepost
+63	Can delete like post	16	delete_likepost
+64	Can view like post	16	view_likepost
+65	Can add comment	17	add_comment
+66	Can change comment	17	change_comment
+67	Can delete comment	17	delete_comment
+68	Can view comment	17	view_comment
+\.
+
+
+--
+-- TOC entry 3048 (class 0 OID 16575)
+-- Dependencies: 214
+-- Data for Name: authtoken_token; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY public.authtoken_token (key, created, user_id) FROM stdin;
+\.
+
+
+--
+-- TOC entry 3041 (class 0 OID 16501)
+-- Dependencies: 207
+-- Data for Name: django_admin_log; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY public.django_admin_log (id, action_time, object_id, object_repr, action_flag, change_message, content_type_id, user_id) FROM stdin;
+\.
+
+
+--
+-- TOC entry 3039 (class 0 OID 16491)
+-- Dependencies: 205
+-- Data for Name: django_content_type; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY public.django_content_type (id, app_label, model) FROM stdin;
+1	admin	logentry
+2	auth	permission
+3	auth	group
+4	contenttypes	contenttype
+5	sessions	session
+6	sites	site
+7	authtoken	token
+8	authtoken	tokenproxy
+9	account	emailaddress
+10	account	emailconfirmation
+11	socialaccount	socialaccount
+12	socialaccount	socialapp
+13	socialaccount	socialtoken
+14	user	user
+15	post	post
+16	post	likepost
+17	post	comment
+\.
+
+
+--
+-- TOC entry 3031 (class 0 OID 16396)
+-- Dependencies: 197
+-- Data for Name: django_migrations; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY public.django_migrations (id, app, name, applied) FROM stdin;
+1	user	0001_initial	2021-07-20 16:42:47.616942+07
+2	account	0001_initial	2021-07-20 16:42:48.712004+07
+3	account	0002_email_max_length	2021-07-20 16:42:48.786008+07
+4	account	0003_auto_20210716_1429	2021-07-20 16:42:49.677059+07
+5	contenttypes	0001_initial	2021-07-20 16:42:50.008078+07
+6	admin	0001_initial	2021-07-20 16:42:50.297095+07
+7	admin	0002_logentry_remove_auto_add	2021-07-20 16:42:50.318096+07
+8	admin	0003_logentry_add_action_flag_choices	2021-07-20 16:42:50.349098+07
+9	contenttypes	0002_remove_content_type_name	2021-07-20 16:42:50.397101+07
+10	auth	0001_initial	2021-07-20 16:42:51.07914+07
+11	auth	0002_alter_permission_name_max_length	2021-07-20 16:42:51.105141+07
+12	auth	0003_alter_user_email_max_length	2021-07-20 16:42:51.129142+07
+13	auth	0004_alter_user_username_opts	2021-07-20 16:42:51.158144+07
+14	auth	0005_alter_user_last_login_null	2021-07-20 16:42:51.184146+07
+15	auth	0006_require_contenttypes_0002	2021-07-20 16:42:51.235148+07
+16	auth	0007_alter_validators_add_error_messages	2021-07-20 16:42:51.271151+07
+17	auth	0008_alter_user_username_max_length	2021-07-20 16:42:51.326154+07
+18	auth	0009_alter_user_last_name_max_length	2021-07-20 16:42:51.354155+07
+19	auth	0010_alter_group_name_max_length	2021-07-20 16:42:51.400158+07
+20	auth	0011_update_proxy_permissions	2021-07-20 16:42:51.42916+07
+21	auth	0012_alter_user_first_name_max_length	2021-07-20 16:42:51.449161+07
+22	authtoken	0001_initial	2021-07-20 16:42:51.646172+07
+23	authtoken	0002_auto_20160226_1747	2021-07-20 16:42:51.718176+07
+24	authtoken	0003_tokenproxy	2021-07-20 16:42:51.733177+07
+25	post	0001_initial	2021-07-20 16:42:52.077197+07
+26	post	0002_alter_post_user_id	2021-07-20 16:42:52.225205+07
+27	post	0003_comment_likepost	2021-07-20 16:42:52.933246+07
+28	post	0004_alter_comment_unique_together	2021-07-20 16:42:52.981248+07
+29	post	0005_auto_20210720_1642	2021-07-20 16:42:53.086254+07
+30	sessions	0001_initial	2021-07-20 16:42:53.326268+07
+31	sites	0001_initial	2021-07-20 16:42:53.391272+07
+32	sites	0002_alter_domain_unique	2021-07-20 16:42:53.507278+07
+33	socialaccount	0001_initial	2021-07-20 16:42:54.625342+07
+34	socialaccount	0002_token_max_lengths	2021-07-20 16:42:54.822354+07
+35	socialaccount	0003_extra_data_default_dict	2021-07-20 16:42:54.858356+07
+36	socialaccount	0004_auto_20210719_0852	2021-07-20 16:42:56.835469+07
+37	user	0002_auto_20210714_1343	2021-07-20 16:42:58.695575+07
+38	user	0003_auto_20210714_1352	2021-07-20 16:42:58.840583+07
+39	user	0004_auto_20210714_1439	2021-07-20 16:42:58.899587+07
+40	user	0005_todo	2021-07-20 16:42:58.966591+07
+41	user	0006_auto_20210714_1619	2021-07-20 16:42:59.182603+07
+42	user	0007_alter_user_age	2021-07-20 16:42:59.30261+07
+43	user	0008_alter_user_last_name	2021-07-20 16:42:59.340612+07
+\.
+
+
+--
+-- TOC entry 3055 (class 0 OID 16663)
+-- Dependencies: 221
+-- Data for Name: django_session; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY public.django_session (session_key, session_data, expire_date) FROM stdin;
+ksydym1xm6qnodk1zbmvxfy80lgnd7n2	.eJxVjEEOwiAURO_C2jR8oAju7EXI5wOB2NBEYGW8u63pQpfzZua9mMPRsxstPl0J7MaAXX6ZR3rEehS4rgeekGgbtU_fzVm36b6nWHsh7GWry_n6U2VsefdI5DzOifuAioRVBr2WIVlBwWuQs7RGKJG8sNICh6vUMWnrCQKYJAyw9we45Dve:1m5mJg:wCZIqNUyzCAu54z84M_9jpkJULvIusdZC8HfvJmJLNs	2021-08-03 16:45:32.684383+07
+\.
+
+
+--
+-- TOC entry 3057 (class 0 OID 16675)
+-- Dependencies: 223
+-- Data for Name: django_site; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY public.django_site (id, domain, name) FROM stdin;
+1	example.com	example.com
+\.
+
+
+--
+-- TOC entry 3054 (class 0 OID 16620)
+-- Dependencies: 220
+-- Data for Name: post_comment; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY public.post_comment (id, content, parent_comment_id, post_id_id, user_id_id) FROM stdin;
+\.
+
+
+--
+-- TOC entry 3052 (class 0 OID 16612)
+-- Dependencies: 218
+-- Data for Name: post_likepost; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY public.post_likepost (id, post_id_id, user_id_id) FROM stdin;
+\.
+
+
+--
+-- TOC entry 3050 (class 0 OID 16590)
+-- Dependencies: 216
+-- Data for Name: post_post; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY public.post_post (id, title, content, mode, date_of_creation, date_of_modification, user_id_id) FROM stdin;
+\.
+
+
+--
+-- TOC entry 3058 (class 0 OID 16686)
+-- Dependencies: 224
+-- Data for Name: socialaccount_socialaccount; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY public.socialaccount_socialaccount (id, provider, uid, last_login, date_joined, extra_data, user_id) FROM stdin;
+\.
+
+
+--
+-- TOC entry 3059 (class 0 OID 16697)
+-- Dependencies: 225
+-- Data for Name: socialaccount_socialapp; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY public.socialaccount_socialapp (id, provider, name, client_id, secret, key) FROM stdin;
+\.
+
+
+--
+-- TOC entry 3061 (class 0 OID 16705)
+-- Dependencies: 227
+-- Data for Name: socialaccount_socialapp_sites; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY public.socialaccount_socialapp_sites (id, socialapp_id, site_id) FROM stdin;
+\.
+
+
+--
+-- TOC entry 3062 (class 0 OID 16713)
+-- Dependencies: 228
+-- Data for Name: socialaccount_socialtoken; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY public.socialaccount_socialtoken (id, token, token_secret, expires_at, account_id, app_id) FROM stdin;
+\.
+
+
+--
+-- TOC entry 3033 (class 0 OID 16407)
+-- Dependencies: 199
+-- Data for Name: user_user; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY public.user_user (id, password, last_login, age, date_joined, email, first_name, is_active, is_admin, is_staff, is_superuser, last_name, is_verified) FROM stdin;
+1	pbkdf2_sha256$260000$YkeubPeu2yUZhiIJWPjm5u$WO+5XWTiAAHtJo2zOREXGACqRu+O6ew2FhjGPNX0NHo=	2021-07-20 16:45:32.680383+07	20	2021-07-20 16:45:21.870764+07	admin@socialnetwork.com	Admin	t	t	t	f	\N	f
+\.
+
+
+--
+-- TOC entry 3091 (class 0 OID 0)
+-- Dependencies: 202
+-- Name: account_emailaddress_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('public.account_emailaddress_id_seq', 1, false);
+
+
+--
+-- TOC entry 3092 (class 0 OID 0)
+-- Dependencies: 203
+-- Name: account_emailconfirmation_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('public.account_emailconfirmation_id_seq', 1, false);
+
+
+--
+-- TOC entry 3093 (class 0 OID 0)
+-- Dependencies: 210
+-- Name: auth_group_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('public.auth_group_id_seq', 1, false);
+
+
+--
+-- TOC entry 3094 (class 0 OID 0)
+-- Dependencies: 212
+-- Name: auth_group_permissions_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('public.auth_group_permissions_id_seq', 1, false);
+
+
+--
+-- TOC entry 3095 (class 0 OID 0)
+-- Dependencies: 208
+-- Name: auth_permission_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('public.auth_permission_id_seq', 68, true);
+
+
+--
+-- TOC entry 3096 (class 0 OID 0)
+-- Dependencies: 206
+-- Name: django_admin_log_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('public.django_admin_log_id_seq', 1, false);
+
+
+--
+-- TOC entry 3097 (class 0 OID 0)
+-- Dependencies: 204
+-- Name: django_content_type_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('public.django_content_type_id_seq', 17, true);
+
+
+--
+-- TOC entry 3098 (class 0 OID 0)
+-- Dependencies: 196
+-- Name: django_migrations_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('public.django_migrations_id_seq', 43, true);
+
+
+--
+-- TOC entry 3099 (class 0 OID 0)
+-- Dependencies: 222
+-- Name: django_site_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('public.django_site_id_seq', 1, true);
+
+
+--
+-- TOC entry 3100 (class 0 OID 0)
+-- Dependencies: 219
+-- Name: post_comment_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('public.post_comment_id_seq', 1, false);
+
+
+--
+-- TOC entry 3101 (class 0 OID 0)
+-- Dependencies: 217
+-- Name: post_likepost_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('public.post_likepost_id_seq', 1, false);
+
+
+--
+-- TOC entry 3102 (class 0 OID 0)
+-- Dependencies: 215
+-- Name: post_post_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('public.post_post_id_seq', 1, false);
+
+
+--
+-- TOC entry 3103 (class 0 OID 0)
+-- Dependencies: 229
+-- Name: socialaccount_socialaccount_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('public.socialaccount_socialaccount_id_seq', 1, false);
+
+
+--
+-- TOC entry 3104 (class 0 OID 0)
+-- Dependencies: 230
+-- Name: socialaccount_socialapp_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('public.socialaccount_socialapp_id_seq', 1, false);
+
+
+--
+-- TOC entry 3105 (class 0 OID 0)
+-- Dependencies: 226
+-- Name: socialaccount_socialapp_sites_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('public.socialaccount_socialapp_sites_id_seq', 1, false);
+
+
+--
+-- TOC entry 3106 (class 0 OID 0)
+-- Dependencies: 231
+-- Name: socialaccount_socialtoken_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('public.socialaccount_socialtoken_id_seq', 1, false);
+
+
+--
+-- TOC entry 3107 (class 0 OID 0)
+-- Dependencies: 198
+-- Name: user_user_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('public.user_user_id_seq', 1, true);
+
+
+--
+-- TOC entry 2810 (class 2606 OID 16448)
+-- Name: account_emailaddress account_emailaddress_email_key; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.account_emailaddress
+    ADD CONSTRAINT account_emailaddress_email_key UNIQUE (email);
+
+
+--
+-- TOC entry 2812 (class 2606 OID 16452)
+-- Name: account_emailaddress account_emailaddress_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.account_emailaddress
+    ADD CONSTRAINT account_emailaddress_pkey PRIMARY KEY (id);
+
+
+--
+-- TOC entry 2817 (class 2606 OID 16432)
+-- Name: account_emailconfirmation account_emailconfirmation_key_key; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.account_emailconfirmation
+    ADD CONSTRAINT account_emailconfirmation_key_key UNIQUE (key);
+
+
+--
+-- TOC entry 2819 (class 2606 OID 16478)
+-- Name: account_emailconfirmation account_emailconfirmation_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.account_emailconfirmation
+    ADD CONSTRAINT account_emailconfirmation_pkey PRIMARY KEY (id);
+
+
+--
+-- TOC entry 2835 (class 2606 OID 16573)
+-- Name: auth_group auth_group_name_key; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.auth_group
+    ADD CONSTRAINT auth_group_name_key UNIQUE (name);
+
+
+--
+-- TOC entry 2840 (class 2606 OID 16559)
+-- Name: auth_group_permissions auth_group_permissions_group_id_permission_id_0cd325b0_uniq; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.auth_group_permissions
+    ADD CONSTRAINT auth_group_permissions_group_id_permission_id_0cd325b0_uniq UNIQUE (group_id, permission_id);
+
+
+--
+-- TOC entry 2843 (class 2606 OID 16548)
+-- Name: auth_group_permissions auth_group_permissions_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.auth_group_permissions
+    ADD CONSTRAINT auth_group_permissions_pkey PRIMARY KEY (id);
+
+
+--
+-- TOC entry 2837 (class 2606 OID 16538)
+-- Name: auth_group auth_group_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.auth_group
+    ADD CONSTRAINT auth_group_pkey PRIMARY KEY (id);
+
+
+--
+-- TOC entry 2830 (class 2606 OID 16550)
+-- Name: auth_permission auth_permission_content_type_id_codename_01ab375a_uniq; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.auth_permission
+    ADD CONSTRAINT auth_permission_content_type_id_codename_01ab375a_uniq UNIQUE (content_type_id, codename);
+
+
+--
+-- TOC entry 2832 (class 2606 OID 16530)
+-- Name: auth_permission auth_permission_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.auth_permission
+    ADD CONSTRAINT auth_permission_pkey PRIMARY KEY (id);
+
+
+--
+-- TOC entry 2846 (class 2606 OID 16579)
+-- Name: authtoken_token authtoken_token_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.authtoken_token
+    ADD CONSTRAINT authtoken_token_pkey PRIMARY KEY (key);
+
+
+--
+-- TOC entry 2848 (class 2606 OID 16581)
+-- Name: authtoken_token authtoken_token_user_id_key; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.authtoken_token
+    ADD CONSTRAINT authtoken_token_user_id_key UNIQUE (user_id);
+
+
+--
+-- TOC entry 2826 (class 2606 OID 16510)
+-- Name: django_admin_log django_admin_log_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.django_admin_log
+    ADD CONSTRAINT django_admin_log_pkey PRIMARY KEY (id);
+
+
+--
+-- TOC entry 2821 (class 2606 OID 16498)
+-- Name: django_content_type django_content_type_app_label_model_76bd3d3b_uniq; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.django_content_type
+    ADD CONSTRAINT django_content_type_app_label_model_76bd3d3b_uniq UNIQUE (app_label, model);
+
+
+--
+-- TOC entry 2823 (class 2606 OID 16496)
+-- Name: django_content_type django_content_type_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.django_content_type
+    ADD CONSTRAINT django_content_type_pkey PRIMARY KEY (id);
+
+
+--
+-- TOC entry 2802 (class 2606 OID 16404)
+-- Name: django_migrations django_migrations_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.django_migrations
+    ADD CONSTRAINT django_migrations_pkey PRIMARY KEY (id);
+
+
+--
+-- TOC entry 2865 (class 2606 OID 16670)
+-- Name: django_session django_session_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.django_session
+    ADD CONSTRAINT django_session_pkey PRIMARY KEY (session_key);
+
+
+--
+-- TOC entry 2869 (class 2606 OID 16682)
+-- Name: django_site django_site_domain_a2e37b91_uniq; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.django_site
+    ADD CONSTRAINT django_site_domain_a2e37b91_uniq UNIQUE (domain);
+
+
+--
+-- TOC entry 2871 (class 2606 OID 16680)
+-- Name: django_site django_site_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.django_site
+    ADD CONSTRAINT django_site_pkey PRIMARY KEY (id);
+
+
+--
+-- TOC entry 2860 (class 2606 OID 16628)
+-- Name: post_comment post_comment_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.post_comment
+    ADD CONSTRAINT post_comment_pkey PRIMARY KEY (id);
+
+
+--
+-- TOC entry 2853 (class 2606 OID 16617)
+-- Name: post_likepost post_likepost_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.post_likepost
+    ADD CONSTRAINT post_likepost_pkey PRIMARY KEY (id);
+
+
+--
+-- TOC entry 2856 (class 2606 OID 16630)
+-- Name: post_likepost post_likepost_post_id_id_user_id_id_46a19063_uniq; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.post_likepost
+    ADD CONSTRAINT post_likepost_post_id_id_user_id_id_46a19063_uniq UNIQUE (post_id_id, user_id_id);
+
+
+--
+-- TOC entry 2850 (class 2606 OID 16598)
+-- Name: post_post post_post_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.post_post
+    ADD CONSTRAINT post_post_pkey PRIMARY KEY (id);
+
+
+--
+-- TOC entry 2873 (class 2606 OID 16763)
+-- Name: socialaccount_socialaccount socialaccount_socialaccount_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.socialaccount_socialaccount
+    ADD CONSTRAINT socialaccount_socialaccount_pkey PRIMARY KEY (id);
+
+
+--
+-- TOC entry 2875 (class 2606 OID 16725)
+-- Name: socialaccount_socialaccount socialaccount_socialaccount_provider_uid_fc810c6e_uniq; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.socialaccount_socialaccount
+    ADD CONSTRAINT socialaccount_socialaccount_provider_uid_fc810c6e_uniq UNIQUE (provider, uid);
+
+
+--
+-- TOC entry 2880 (class 2606 OID 16821)
+-- Name: socialaccount_socialapp_sites socialaccount_socialapp__socialapp_id_site_id_71a9a768_uniq; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.socialaccount_socialapp_sites
+    ADD CONSTRAINT socialaccount_socialapp__socialapp_id_site_id_71a9a768_uniq UNIQUE (socialapp_id, site_id);
+
+
+--
+-- TOC entry 2878 (class 2606 OID 16796)
+-- Name: socialaccount_socialapp socialaccount_socialapp_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.socialaccount_socialapp
+    ADD CONSTRAINT socialaccount_socialapp_pkey PRIMARY KEY (id);
+
+
+--
+-- TOC entry 2882 (class 2606 OID 16710)
+-- Name: socialaccount_socialapp_sites socialaccount_socialapp_sites_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.socialaccount_socialapp_sites
+    ADD CONSTRAINT socialaccount_socialapp_sites_pkey PRIMARY KEY (id);
+
+
+--
+-- TOC entry 2888 (class 2606 OID 16808)
+-- Name: socialaccount_socialtoken socialaccount_socialtoken_app_id_account_id_fca4e0ac_uniq; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.socialaccount_socialtoken
+    ADD CONSTRAINT socialaccount_socialtoken_app_id_account_id_fca4e0ac_uniq UNIQUE (app_id, account_id);
+
+
+--
+-- TOC entry 2890 (class 2606 OID 16837)
+-- Name: socialaccount_socialtoken socialaccount_socialtoken_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.socialaccount_socialtoken
+    ADD CONSTRAINT socialaccount_socialtoken_pkey PRIMARY KEY (id);
+
+
+--
+-- TOC entry 2805 (class 2606 OID 16859)
+-- Name: user_user user_user_email_key; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.user_user
+    ADD CONSTRAINT user_user_email_key UNIQUE (email);
+
+
+--
+-- TOC entry 2807 (class 2606 OID 16412)
+-- Name: user_user user_user_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.user_user
+    ADD CONSTRAINT user_user_pkey PRIMARY KEY (id);
+
+
+--
+-- TOC entry 2808 (class 1259 OID 16449)
+-- Name: account_emailaddress_email_03be32b2_like; Type: INDEX; Schema: public; Owner: postgres
+--
+
+CREATE INDEX account_emailaddress_email_03be32b2_like ON public.account_emailaddress USING btree (email varchar_pattern_ops);
+
+
+--
+-- TOC entry 2813 (class 1259 OID 16439)
+-- Name: account_emailaddress_user_id_2c513194; Type: INDEX; Schema: public; Owner: postgres
+--
+
+CREATE INDEX account_emailaddress_user_id_2c513194 ON public.account_emailaddress USING btree (user_id);
+
+
+--
+-- TOC entry 2814 (class 1259 OID 16463)
+-- Name: account_emailconfirmation_email_address_id_5b7f8c58; Type: INDEX; Schema: public; Owner: postgres
+--
+
+CREATE INDEX account_emailconfirmation_email_address_id_5b7f8c58 ON public.account_emailconfirmation USING btree (email_address_id);
+
+
+--
+-- TOC entry 2815 (class 1259 OID 16445)
+-- Name: account_emailconfirmation_key_f43612bd_like; Type: INDEX; Schema: public; Owner: postgres
+--
+
+CREATE INDEX account_emailconfirmation_key_f43612bd_like ON public.account_emailconfirmation USING btree (key varchar_pattern_ops);
+
+
+--
+-- TOC entry 2833 (class 1259 OID 16574)
+-- Name: auth_group_name_a6ea08ec_like; Type: INDEX; Schema: public; Owner: postgres
+--
+
+CREATE INDEX auth_group_name_a6ea08ec_like ON public.auth_group USING btree (name varchar_pattern_ops);
+
+
+--
+-- TOC entry 2838 (class 1259 OID 16570)
+-- Name: auth_group_permissions_group_id_b120cbf9; Type: INDEX; Schema: public; Owner: postgres
+--
+
+CREATE INDEX auth_group_permissions_group_id_b120cbf9 ON public.auth_group_permissions USING btree (group_id);
+
+
+--
+-- TOC entry 2841 (class 1259 OID 16571)
+-- Name: auth_group_permissions_permission_id_84c5c92e; Type: INDEX; Schema: public; Owner: postgres
+--
+
+CREATE INDEX auth_group_permissions_permission_id_84c5c92e ON public.auth_group_permissions USING btree (permission_id);
+
+
+--
+-- TOC entry 2828 (class 1259 OID 16556)
+-- Name: auth_permission_content_type_id_2f476e4b; Type: INDEX; Schema: public; Owner: postgres
+--
+
+CREATE INDEX auth_permission_content_type_id_2f476e4b ON public.auth_permission USING btree (content_type_id);
+
+
+--
+-- TOC entry 2844 (class 1259 OID 16587)
+-- Name: authtoken_token_key_10f0b77e_like; Type: INDEX; Schema: public; Owner: postgres
+--
+
+CREATE INDEX authtoken_token_key_10f0b77e_like ON public.authtoken_token USING btree (key varchar_pattern_ops);
+
+
+--
+-- TOC entry 2824 (class 1259 OID 16521)
+-- Name: django_admin_log_content_type_id_c4bce8eb; Type: INDEX; Schema: public; Owner: postgres
+--
+
+CREATE INDEX django_admin_log_content_type_id_c4bce8eb ON public.django_admin_log USING btree (content_type_id);
+
+
+--
+-- TOC entry 2827 (class 1259 OID 16522)
+-- Name: django_admin_log_user_id_c564eba6; Type: INDEX; Schema: public; Owner: postgres
+--
+
+CREATE INDEX django_admin_log_user_id_c564eba6 ON public.django_admin_log USING btree (user_id);
+
+
+--
+-- TOC entry 2863 (class 1259 OID 16672)
+-- Name: django_session_expire_date_a5c62663; Type: INDEX; Schema: public; Owner: postgres
+--
+
+CREATE INDEX django_session_expire_date_a5c62663 ON public.django_session USING btree (expire_date);
+
+
+--
+-- TOC entry 2866 (class 1259 OID 16671)
+-- Name: django_session_session_key_c0390e0f_like; Type: INDEX; Schema: public; Owner: postgres
+--
+
+CREATE INDEX django_session_session_key_c0390e0f_like ON public.django_session USING btree (session_key varchar_pattern_ops);
+
+
+--
+-- TOC entry 2867 (class 1259 OID 16683)
+-- Name: django_site_domain_a2e37b91_like; Type: INDEX; Schema: public; Owner: postgres
+--
+
+CREATE INDEX django_site_domain_a2e37b91_like ON public.django_site USING btree (domain varchar_pattern_ops);
+
+
+--
+-- TOC entry 2858 (class 1259 OID 16660)
+-- Name: post_comment_parent_comment_id_b311aa28; Type: INDEX; Schema: public; Owner: postgres
+--
+
+CREATE INDEX post_comment_parent_comment_id_b311aa28 ON public.post_comment USING btree (parent_comment_id);
+
+
+--
+-- TOC entry 2861 (class 1259 OID 16661)
+-- Name: post_comment_post_id_id_bdc74346; Type: INDEX; Schema: public; Owner: postgres
+--
+
+CREATE INDEX post_comment_post_id_id_bdc74346 ON public.post_comment USING btree (post_id_id);
+
+
+--
+-- TOC entry 2862 (class 1259 OID 16662)
+-- Name: post_comment_user_id_id_887063be; Type: INDEX; Schema: public; Owner: postgres
+--
+
+CREATE INDEX post_comment_user_id_id_887063be ON public.post_comment USING btree (user_id_id);
+
+
+--
+-- TOC entry 2854 (class 1259 OID 16641)
+-- Name: post_likepost_post_id_id_efb357a7; Type: INDEX; Schema: public; Owner: postgres
+--
+
+CREATE INDEX post_likepost_post_id_id_efb357a7 ON public.post_likepost USING btree (post_id_id);
+
+
+--
+-- TOC entry 2857 (class 1259 OID 16642)
+-- Name: post_likepost_user_id_id_1cd6c0a2; Type: INDEX; Schema: public; Owner: postgres
+--
+
+CREATE INDEX post_likepost_user_id_id_1cd6c0a2 ON public.post_likepost USING btree (user_id_id);
+
+
+--
+-- TOC entry 2851 (class 1259 OID 16604)
+-- Name: post_post_user_id_id_133a2b59; Type: INDEX; Schema: public; Owner: postgres
+--
+
+CREATE INDEX post_post_user_id_id_133a2b59 ON public.post_post USING btree (user_id_id);
+
+
+--
+-- TOC entry 2876 (class 1259 OID 16731)
+-- Name: socialaccount_socialaccount_user_id_8146e70c; Type: INDEX; Schema: public; Owner: postgres
+--
+
+CREATE INDEX socialaccount_socialaccount_user_id_8146e70c ON public.socialaccount_socialaccount USING btree (user_id);
+
+
+--
+-- TOC entry 2883 (class 1259 OID 16745)
+-- Name: socialaccount_socialapp_sites_site_id_2579dee5; Type: INDEX; Schema: public; Owner: postgres
+--
+
+CREATE INDEX socialaccount_socialapp_sites_site_id_2579dee5 ON public.socialaccount_socialapp_sites USING btree (site_id);
+
+
+--
+-- TOC entry 2884 (class 1259 OID 16822)
+-- Name: socialaccount_socialapp_sites_socialapp_id_97fb6e7d; Type: INDEX; Schema: public; Owner: postgres
+--
+
+CREATE INDEX socialaccount_socialapp_sites_socialapp_id_97fb6e7d ON public.socialaccount_socialapp_sites USING btree (socialapp_id);
+
+
+--
+-- TOC entry 2885 (class 1259 OID 16778)
+-- Name: socialaccount_socialtoken_account_id_951f210e; Type: INDEX; Schema: public; Owner: postgres
+--
+
+CREATE INDEX socialaccount_socialtoken_account_id_951f210e ON public.socialaccount_socialtoken USING btree (account_id);
+
+
+--
+-- TOC entry 2886 (class 1259 OID 16809)
+-- Name: socialaccount_socialtoken_app_id_636a42d7; Type: INDEX; Schema: public; Owner: postgres
+--
+
+CREATE INDEX socialaccount_socialtoken_app_id_636a42d7 ON public.socialaccount_socialtoken USING btree (app_id);
+
+
+--
+-- TOC entry 2803 (class 1259 OID 16907)
+-- Name: user_user_email_1c6f3d1a_like; Type: INDEX; Schema: public; Owner: postgres
+--
+
+CREATE INDEX user_user_email_1c6f3d1a_like ON public.user_user USING btree (email varchar_pattern_ops);
+
+
+--
+-- TOC entry 2891 (class 2606 OID 16433)
+-- Name: account_emailaddress account_emailaddress_user_id_2c513194_fk_user_user_id; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.account_emailaddress
+    ADD CONSTRAINT account_emailaddress_user_id_2c513194_fk_user_user_id FOREIGN KEY (user_id) REFERENCES public.user_user(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- TOC entry 2892 (class 2606 OID 16471)
+-- Name: account_emailconfirmation account_emailconfirmation_email_address_id_5b7f8c58_fk; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.account_emailconfirmation
+    ADD CONSTRAINT account_emailconfirmation_email_address_id_5b7f8c58_fk FOREIGN KEY (email_address_id) REFERENCES public.account_emailaddress(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- TOC entry 2897 (class 2606 OID 16565)
+-- Name: auth_group_permissions auth_group_permissio_permission_id_84c5c92e_fk_auth_perm; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.auth_group_permissions
+    ADD CONSTRAINT auth_group_permissio_permission_id_84c5c92e_fk_auth_perm FOREIGN KEY (permission_id) REFERENCES public.auth_permission(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- TOC entry 2896 (class 2606 OID 16560)
+-- Name: auth_group_permissions auth_group_permissions_group_id_b120cbf9_fk_auth_group_id; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.auth_group_permissions
+    ADD CONSTRAINT auth_group_permissions_group_id_b120cbf9_fk_auth_group_id FOREIGN KEY (group_id) REFERENCES public.auth_group(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- TOC entry 2895 (class 2606 OID 16551)
+-- Name: auth_permission auth_permission_content_type_id_2f476e4b_fk_django_co; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.auth_permission
+    ADD CONSTRAINT auth_permission_content_type_id_2f476e4b_fk_django_co FOREIGN KEY (content_type_id) REFERENCES public.django_content_type(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- TOC entry 2898 (class 2606 OID 16582)
+-- Name: authtoken_token authtoken_token_user_id_35299eff_fk_user_user_id; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.authtoken_token
+    ADD CONSTRAINT authtoken_token_user_id_35299eff_fk_user_user_id FOREIGN KEY (user_id) REFERENCES public.user_user(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- TOC entry 2893 (class 2606 OID 16511)
+-- Name: django_admin_log django_admin_log_content_type_id_c4bce8eb_fk_django_co; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.django_admin_log
+    ADD CONSTRAINT django_admin_log_content_type_id_c4bce8eb_fk_django_co FOREIGN KEY (content_type_id) REFERENCES public.django_content_type(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- TOC entry 2894 (class 2606 OID 16516)
+-- Name: django_admin_log django_admin_log_user_id_c564eba6_fk_user_user_id; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.django_admin_log
+    ADD CONSTRAINT django_admin_log_user_id_c564eba6_fk_user_user_id FOREIGN KEY (user_id) REFERENCES public.user_user(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- TOC entry 2902 (class 2606 OID 16645)
+-- Name: post_comment post_comment_parent_comment_id_b311aa28_fk_post_comment_id; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.post_comment
+    ADD CONSTRAINT post_comment_parent_comment_id_b311aa28_fk_post_comment_id FOREIGN KEY (parent_comment_id) REFERENCES public.post_comment(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- TOC entry 2903 (class 2606 OID 16650)
+-- Name: post_comment post_comment_post_id_id_bdc74346_fk_post_post_id; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.post_comment
+    ADD CONSTRAINT post_comment_post_id_id_bdc74346_fk_post_post_id FOREIGN KEY (post_id_id) REFERENCES public.post_post(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- TOC entry 2904 (class 2606 OID 16655)
+-- Name: post_comment post_comment_user_id_id_887063be_fk_user_user_id; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.post_comment
+    ADD CONSTRAINT post_comment_user_id_id_887063be_fk_user_user_id FOREIGN KEY (user_id_id) REFERENCES public.user_user(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- TOC entry 2900 (class 2606 OID 16631)
+-- Name: post_likepost post_likepost_post_id_id_efb357a7_fk_post_post_id; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.post_likepost
+    ADD CONSTRAINT post_likepost_post_id_id_efb357a7_fk_post_post_id FOREIGN KEY (post_id_id) REFERENCES public.post_post(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- TOC entry 2901 (class 2606 OID 16636)
+-- Name: post_likepost post_likepost_user_id_id_1cd6c0a2_fk_user_user_id; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.post_likepost
+    ADD CONSTRAINT post_likepost_user_id_id_1cd6c0a2_fk_user_user_id FOREIGN KEY (user_id_id) REFERENCES public.user_user(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- TOC entry 2899 (class 2606 OID 16605)
+-- Name: post_post post_post_user_id_id_133a2b59_fk_user_user_id; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.post_post
+    ADD CONSTRAINT post_post_user_id_id_133a2b59_fk_user_user_id FOREIGN KEY (user_id_id) REFERENCES public.user_user(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- TOC entry 2906 (class 2606 OID 16739)
+-- Name: socialaccount_socialapp_sites socialaccount_social_site_id_2579dee5_fk_django_si; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.socialaccount_socialapp_sites
+    ADD CONSTRAINT socialaccount_social_site_id_2579dee5_fk_django_si FOREIGN KEY (site_id) REFERENCES public.django_site(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- TOC entry 2905 (class 2606 OID 16726)
+-- Name: socialaccount_socialaccount socialaccount_socialaccount_user_id_8146e70c_fk_user_user_id; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.socialaccount_socialaccount
+    ADD CONSTRAINT socialaccount_socialaccount_user_id_8146e70c_fk_user_user_id FOREIGN KEY (user_id) REFERENCES public.user_user(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- TOC entry 2907 (class 2606 OID 16789)
+-- Name: socialaccount_socialtoken socialaccount_socialtoken_account_id_951f210e_fk; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.socialaccount_socialtoken
+    ADD CONSTRAINT socialaccount_socialtoken_account_id_951f210e_fk FOREIGN KEY (account_id) REFERENCES public.socialaccount_socialaccount(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- TOC entry 2908 (class 2606 OID 16830)
+-- Name: socialaccount_socialtoken socialaccount_socialtoken_app_id_636a42d7_fk; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.socialaccount_socialtoken
+    ADD CONSTRAINT socialaccount_socialtoken_app_id_636a42d7_fk FOREIGN KEY (app_id) REFERENCES public.socialaccount_socialapp(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+-- Completed on 2021-07-20 16:53:30
+
+--
+-- PostgreSQL database dump complete
+--
+
