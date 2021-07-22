@@ -1,12 +1,10 @@
-@access_token = eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNjI2ODQ2ODExLCJqdGkiOiJhOWRlNmUwZTQ2YTg0NDE1YjBhNjZkZDdlY2UzYjA3YiIsInVzZXJfaWQiOjIxfQ._xbQb67aNXLLvPorLfNajxWqOx7pOh5OXEoZ6frMG_o
-
-
+@access_token = eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNjI2OTI2ODU4LCJqdGkiOiI0NDM1ODJmZjA4NWE0YjJhYjFjMmQ0M2VlZGNlN2FlNyIsInVzZXJfaWQiOjIwfQ.i102YXPwQJ9aYEGxLu9VoQJLTLE2CfW6hYthc1dcl6E
 ### User Login
 POST http://127.0.0.1:8000/api/v1/user/login HTTP/1.1
 content-type: application/json
 
 {
-    "email": "datluu.1702@gmail.com",
+    "email": "ees69720@cuoly.com",
     "password": "12345678aa"
 }
 
@@ -17,6 +15,18 @@ content-type: application/json
 
 {
     "email": "hbc77435@eoopy.com",
+    "password1": "12345678aa",
+    "password2": "12345678aa",
+    "age": "18",
+    "first_name": "Hello"
+}
+
+### Test Register
+POST http://127.0.0.1:8000/api/v1/user/register HTTP/1.1
+content-type: application/json
+
+{
+    "email": "ees69720@cuoly.com",
     "password1": "12345678aa",
     "password2": "12345678aa",
     "age": "18",
@@ -76,7 +86,7 @@ POST http://127.0.0.1:8000/api/v1/user/reset-password HTTP/1.1
 content-type: application/json
 
 {
-    "email": "hbc77435@eoopy.com"
+    "email": "ees69720@cuoly.com"
 
 }
 
@@ -130,19 +140,19 @@ Authorization: Bearer {{access_token}}
 
 
 ### Post Update
-PUT http://127.0.0.1:8000/api/v1/post/8 HTTP/1.1
+PUT http://127.0.0.1:8000/api/v1/post/20 HTTP/1.1
 content-type: application/json
 Authorization: Bearer {{access_token}}
 
 {
     "title": "Title 8",
     "content": "this is post 8 (edited)",
-    "mode": "PRIVATE"
+    "mode": "PUBLIC"
 }
 
 
 ### Post Detail
-GET http://127.0.0.1:8000/api/v1/post/8 HTTP/1.1
+GET http://127.0.0.1:8000/api/v1/post/20 HTTP/1.1
 content-type: application/json
 Authorization: Bearer {{access_token}}
 
@@ -154,19 +164,19 @@ Authorization: Bearer {{access_token}}
 
 
 ### Post List
-GET http://127.0.0.1:8000/api/v1/post?page=2 HTTP/1.1
+GET http://127.0.0.1:8000/api/v1/post?page=3 HTTP/1.1
 content-type: application/json
 Authorization: Bearer {{access_token}}
 
 
 ### Post Delete
-DELETE http://127.0.0.1:8000/api/v1/post/6 HTTP/1.1
+DELETE http://127.0.0.1:8000/api/v1/post/19 HTTP/1.1
 content-type: application/json
 Authorization: Bearer {{access_token}}
 
 
 ### Like Post 
-POST http://127.0.0.1:8000/api/v1/like-post/8 HTTP/1.1
+POST http://127.0.0.1:8000/api/v1/like-post/20 HTTP/1.1
 content-type: application/json
 Authorization: Bearer {{access_token}}
 
@@ -178,7 +188,7 @@ Authorization: Bearer {{access_token}}
 
 
 ### Likepost list
-GET http://127.0.0.1:8000/api/v1/like-post/4 HTTP/1.1
+GET http://127.0.0.1:8000/api/v1/like-post/18 HTTP/1.1
 content-type: application/json
 Authorization: Bearer {{access_token}}
 
@@ -190,7 +200,7 @@ Authorization: Bearer {{access_token}}
 
 
 ### Comment Create
-POST http://127.0.0.1:8000/api/v1/comment/4 HTTP/1.1
+POST http://127.0.0.1:8000/api/v1/comment/18 HTTP/1.1
 content-type: application/json
 Authorization: Bearer {{access_token}}
 
@@ -206,13 +216,13 @@ Authorization: Bearer {{access_token}}
 
 
 ### Comment List
-GET http://127.0.0.1:8000/api/v1/comment/4?page=3 HTTP/1.1
+GET http://127.0.0.1:8000/api/v1/comment/4?page=2 HTTP/1.1
 content-type: application/json
 Authorization: Bearer {{access_token}}
 
 
 ### Comment Update
-PUT http://127.0.0.1:8000/api/v1/comment/12 HTTP/1.1
+PUT http://127.0.0.1:8000/api/v1/comment/14 HTTP/1.1
 content-type: application/json
 Authorization: Bearer {{access_token}}
 
@@ -222,13 +232,13 @@ Authorization: Bearer {{access_token}}
 
 
 ### Comment Delete
-DELETE  http://127.0.0.1:8000/api/v1/comment/12 HTTP/1.1
+DELETE  http://127.0.0.1:8000/api/v1/comment/14 HTTP/1.1
 content-type: application/json
 Authorization: Bearer {{access_token}}
 
 
 ### Comment Sublist
-GET http://127.0.0.1:8000/api/v1/comment/4/sub/2 HTTP/1.1
+GET http://127.0.0.1:8000/api/v1/comment/4/sub/3 HTTP/1.1
 content-type: application/json
 Authorization: Bearer {{access_token}}
 
