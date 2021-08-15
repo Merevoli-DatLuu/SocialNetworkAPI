@@ -49,6 +49,8 @@ INSTALLED_APPS = [
     'allauth.socialaccount',
     'user.apps.UserConfig',
     'post.apps.PostConfig',
+    'group.apps.GroupConfig',
+    'message.apps.MessageConfig',
 ]
 
 MIDDLEWARE = [

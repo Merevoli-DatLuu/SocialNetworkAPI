@@ -20,5 +20,7 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('api/v1/user/', include('user.urls')),
     path('api/v1/', include('post.urls')),
+    path('api/v1/group/', include('group.urls')),
+    path('api/v1/message/', include('message.urls')),
     re_path(r'^account/', include('allauth.urls')),
 ]
