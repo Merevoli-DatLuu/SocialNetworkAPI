@@ -2,7 +2,7 @@ from rest_framework import serializers
 from dj_rest_auth.registration.serializers import RegisterSerializer
 from dj_rest_auth.serializers import LoginSerializer, PasswordChangeSerializer
 
-from .models import User
+from .models import Friend, User, FriendStatus, UserFollower
 from .validators import validate_secure_email, validate_age
 
 
@@ -49,3 +49,42 @@ class UserSerializer(serializers.ModelSerializer):
         exclude = ('password', )
 
     
+class FriendSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Friend
+        fields = ['id', 'user_source', 'user_target']
+        read_only_fields = ('user_source', 'user_target') 
+            
+    def create(self, validated_data):
+        user_source = validated_data['user_source']
+        user_target = validated_data['user_target']
+        
+        if user_source == user_target:
+            raise serializers.ValidationError({"user_target": "You can not friend yourself"})
+        
+        if Friend.objects.filter(user_source=user_source, user_target=user_target).exists() or\
+           Friend.objects.filter(user_source=user_target, user_target=user_source).exists():
+            raise serializers.ValidationError({"user_target": "already your friend"})
+        
+        return super().create(validated_data)
+    
+    def update(self, instance, validated_data):
+        instance.status = FriendStatus.ACCEPT
+        return super().update(instance, validated_data)
+        
+
+class UserFollowerSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = UserFollower
+        fields = '__all__'
+        read_only_fields = ('created_time', 'updated_time') 
+            
+    def create(self, validated_data):
+        user_source = validated_data['user_source']
+        user_target = validated_data['user_target']
+        
+        if user_source == user_target:
+            raise serializers.ValidationError({"user_target": "You can not follower yourself"})
+        
+        return super().create(validated_data)
+        
