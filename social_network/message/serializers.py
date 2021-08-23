@@ -9,6 +9,18 @@ class PrivateMessageSerializer(serializers.ModelSerializer):
         model = PrivateMessage
         fields = '__all__'
         read_only_fields = ('created_time', 'updated_time')
+        
+    def to_representation(self, instance):
+        representation = super().to_representation(instance)
+        users = [instance.user_source, instance.user_target]
+        users.remove(self.context.get("request").user)
+        last_message = PrivateMessageDetail.objects.filter(message_id=instance.id).first()
+        representation['user_id'] = users[0].id
+        representation['user_name'] = users[0].first_name
+        representation['last_message'] = last_message.content if last_message is not None else ""
+        del representation['user_source']
+        del representation['user_target']
+        return representation
 
 
 class PrivateMessageDetailSerializer(serializers.ModelSerializer):
@@ -38,6 +50,12 @@ class GroupMessageSerializer(serializers.ModelSerializer):
             admin_member = GroupMessageMember(group_message_id=instance, user_id=instance.created_by, invited_by=instance.created_by, role=GroupMessageMemberRole.OWNER)
             admin_member.save()
         return instance
+    
+    def to_representation(self, instance):
+        representation = super().to_representation(instance)
+        last_message = GroupMessageDetail.objects.filter(group_message_id=instance.id).first()
+        representation['last_message'] = last_message.content if last_message is not None else ""
+        return representation
 
 
 class GroupMessageDetailSerializer(serializers.ModelSerializer):

@@ -2,6 +2,7 @@ from django.http.response import Http404
 from django.shortcuts import get_object_or_404
 from django.db.models.query_utils import Q
 from rest_framework import viewsets
+from rest_framework import pagination
 
 from .models import PrivateMessage, PrivateMessageDetail, GroupMessage, GroupMessageDetail, GroupMessageMember
 from .permissions import PrivateMessageDetailPermission, GroupMessageMemberPermission, GroupMessageMemberUpdateRemovePermission
@@ -17,11 +18,12 @@ class PrivateMessageViewSet(viewsets.ModelViewSet):
     def create(self, request, *args, **kwargs):
         request.data['user_source'] = request.user.id
         request.data['user_target'] = self.kwargs['user_id']
-        return super().create(request, *args, **kwargs)
+        return super().create(request, *args, **kwargs) 
     
     
 class PrivateMessageDetailViewSet(viewsets.ModelViewSet):
     serializer_class = PrivateMessageDetailSerializer
+    pagination.PageNumberPagination.page_size = 50
     
     def get_queryset(self):
         return PrivateMessageDetail.objects.filter(message_id=self.kwargs['message_id'])
@@ -43,7 +45,22 @@ class GroupMessageViewSet(viewsets.ModelViewSet):
     serializer_class = GroupMessageSerializer
     
     def get_queryset(self):
-        return GroupMessage.objects.filter(created_by=self.request.user)
+        return GroupMessage.objects.all()
+    
+    def filter_queryset(self, queryset):
+        queryset = self.get_queryset()
+        
+        if self.action == 'list':
+            queryset = queryset.filter(created_by=self.request.user)
+        elif self.action == 'list_joined':
+            queryset = GroupMessageMember.objects.filter(user_id=self.request.user).values('group_message_id')
+            groups = [p['group_message_id'] for p in queryset]
+            queryset = GroupMessage.objects.filter(pk__in=groups)
+            
+        return queryset
+    
+    def list_joined(self, request, *args, **kwargs):
+        return super().list(request, *args, **kwargs)
     
     def create(self, request, *args, **kwargs):
         request.data['created_by'] = request.user.id
@@ -128,6 +145,10 @@ group_message_list_create = GroupMessageViewSet.as_view({
     'get': 'list',
     'post': 'create'
 }) 
+
+group_message_list_joined = GroupMessageViewSet.as_view({
+    'get': 'list_joined'  
+})
 
 group_message_detail_list_send = GroupMessageDetailViewSet.as_view({
     'get': 'list',

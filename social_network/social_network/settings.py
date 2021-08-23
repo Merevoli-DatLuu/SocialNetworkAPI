@@ -30,6 +30,12 @@ DEBUG = True
 
 ALLOWED_HOSTS = []
 
+# CORS_ALLOWED_ORIGINS = [
+#     "http://127.0.0.1:5500"
+# ]
+
+CORS_ALLOW_ALL_ORIGINS = True
+
 
 # Application definition
 
@@ -47,6 +53,9 @@ INSTALLED_APPS = [
     'allauth.account',
     'dj_rest_auth.registration',
     'allauth.socialaccount',
+    "corsheaders",
+    'django_elasticsearch_dsl',
+    'channels',
     'user.apps.UserConfig',
     'post.apps.PostConfig',
     'group.apps.GroupConfig',
@@ -56,6 +65,7 @@ INSTALLED_APPS = [
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
+    "corsheaders.middleware.CorsMiddleware",
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
@@ -106,7 +116,7 @@ REST_AUTH_REGISTER_SERIALIZERS = {
 SITE_ID = 1
 
 WSGI_APPLICATION = 'social_network.wsgi.application'
-
+ASGI_APPLICATION = 'social_network.asgi.application'
 
 # Database
 # https://docs.djangoproject.com/en/3.2/ref/settings/#databases
@@ -166,7 +176,7 @@ REST_FRAMEWORK = {
         'user.permissions.UserVerifyPermission',
     ],
     'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.PageNumberPagination',
-    'PAGE_SIZE': 2
+    'PAGE_SIZE': 5
 }
 
 # Password validation
@@ -186,6 +196,14 @@ AUTH_PASSWORD_VALIDATORS = [
         'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',
     },
 ]
+
+# Elastic search
+
+ELASTICSEARCH_DSL={
+    'default': {
+        'hosts': 'localhost:9200'
+    },
+}
 
 
 # Internationalization
@@ -226,3 +244,13 @@ CELERY_ACCEPT_CONTENT = ['application/json']
 CELERY_TASK_SERIALIZER = 'json'
 CELERY_RESULT_SERIALIZER = 'json'
 CELERY_TIMEZONE = TIME_ZONE
+
+CHANNEL_LAYERS = {
+    'default': {
+        "BACKEND": "channels.layers.InMemoryChannelLayer"
+        # 'BACKEND': 'channels_redis.core.RedisChannelLayer',
+        # 'CONFIG': {
+        #     'hosts': [('127.0.0.1', 6379)]
+        # }
+    }
+}

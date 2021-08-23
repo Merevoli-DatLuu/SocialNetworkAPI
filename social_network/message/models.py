@@ -27,7 +27,7 @@ class PrivateMessage(models.Model):
     
     class Meta:
         unique_together = ('user_source', 'user_target')
-        ordering = ('updated_time',)
+        ordering = ('-updated_time',)
     
     def __str__(self):
         return f"{self.id} | {self.user_source} | {self.user_target}" 
@@ -40,7 +40,7 @@ class PrivateMessageDetail(models.Model):
     created_time            = models.DateTimeField(auto_now_add=True)
     
     class Meta:
-        ordering = ('created_time',)
+        ordering = ('-created_time',)
     
     def __str__(self):
         return f"{self.id} | {self.message_id} | {self.user_id}" 
@@ -53,7 +53,7 @@ class GroupMessage(models.Model):
     updated_time            = models.DateTimeField(auto_now=True)
     
     class Meta:
-        ordering = ('updated_time',)
+        ordering = ('-updated_time',)
     
     def __str__(self):
         return f"{self.id} | {self.name} | {self.created_by}" 
@@ -66,7 +66,7 @@ class GroupMessageDetail(models.Model):
     created_time            = models.DateTimeField(auto_now_add=True)
     
     class Meta:
-        ordering = ('created_time',)
+        ordering = ('-created_time',)
     
     def __str__(self):
         return f"{self.id} | {self.group_message_id} | {self.user_id}" 

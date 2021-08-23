@@ -6,7 +6,7 @@
 ####################################################
 
 
-@access_token = eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNjI5MDQ5MTM0LCJqdGkiOiI0MjQyOGU5OGNjYTM0ZDBkYmVhYmNiMzY3Yzk4MDhlOSIsInVzZXJfaWQiOjIwfQ.bIwKNVbVOo5TtEpYp_BCRgsgRtSbUha5-3dPnrpZd68
+@access_token = eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNjI5NjkyODM3LCJqdGkiOiIyZWZkNzZiZDYzMjg0YmJiOTZjNGM3MGZhNTk0MjVjNSIsInVzZXJfaWQiOjIwfQ.625Ap7uhKzURKlra2Fcqtsu5gPinuWun5bXEZhxjbm4
 
 
 ########################
@@ -80,6 +80,16 @@ content-type: application/json
 
 {
     "email": "rpf44610@cuoly.com",
+    "password": "12345678aa"
+}
+
+
+### User Login
+POST http://127.0.0.1:8000/api/v1/user/login HTTP/1.1
+content-type: application/json
+
+{
+    "email": "datluu00.com",
     "password": "12345678aa"
 }
 
@@ -607,6 +617,12 @@ Authorization: Bearer {{access_token}}
 
 ### Group Message List
 GET http://127.0.0.1:8000/api/v1/message/group/ HTTP/1.1
+content-type: application/json
+Authorization: Bearer {{access_token}}
+
+
+### Group Message List Joined
+GET http://127.0.0.1:8000/api/v1/message/group/joined HTTP/1.1
 content-type: application/json
 Authorization: Bearer {{access_token}}
 
