@@ -117,7 +117,7 @@ h6,
 #content-container {
     position: relative;
     padding-top: 59px;
-    padding-bottom: 35px;
+    /* padding-bottom: 35px; */
     background-color: #ecf0f5
 }
 
@@ -1002,7 +1002,7 @@ h6,
     #container.mainnav-lg .navbar-brand,
     #container.mainnav-in .brand-title,
     #container.mainnav-lg .brand-title {
-        width: 165px
+        width: 180px
     }
     #container.mainnav-in .brand-icon,
     #container.mainnav-sm .brand-icon,
@@ -3285,9 +3285,9 @@ h6,
 .chat-body .media-body>div>span,
 .chat-body .media-body>div>p {
     display: inline-block;
-    padding: 7px 12px;
+    padding: 10px 15px;
     margin-bottom: 2px;
-    border-radius: 3px;
+    border-radius: 20px;
     background-color: #03a9f4;
     color: #fff;
     vertical-align: top
@@ -9730,8 +9730,8 @@ a.text-dark:focus {
 }
 
 .img-sm {
-    width: 48px;
-    height: 48px
+    width: 38px;
+    height: 38px
 }
 
 .img-lg {
@@ -9799,7 +9799,7 @@ a.text-dark:focus {
 }
 
 .pad-all {
-    padding: 15px
+    padding: 14px
 }
 
 .pad-top {
@@ -9915,4 +9915,136 @@ a.disabled-link:hover {
     .eq-height .eq-box-sm .panel {
         margin-bottom: 0
     }
+}
+
+.header_chat {
+    padding-top: 15px;
+    padding-left: 15px;
+    font-size: 16px;
+    font-weight: 800;
+    color: #1976D2;
+}
+
+.chat-scroll {
+    height: 32em;
+    overflow-y: auto;
+}
+
+[data-tooltip] {
+    position: relative;
+    cursor: pointer;
+    background: black;
+    color: white;
+    /* font-size: 12px; */
+    border-radius: 1em;
+    padding: 0 0.5em;
+}
+
+[data-tooltip]:before {
+    content: attr(data-tooltip);
+    position: absolute;
+    opacity: 0;
+    top: 10%;
+    right: 100%;
+    margin-right: 10px;
+    width: max-content;
+    padding: 0.5em;
+    padding-left: 0.7em;
+    padding-right: 0.7em;
+    background-color: black;
+    border-radius: 0.5em;
+    color: white;
+    text-align: center;
+    transition: 0.2s;
+}
+
+[data-tooltip]:after {
+    content: "";
+    position: absolute;
+    opacity: 0;
+    right: 100%;
+    border: 5px solid black;
+    border-color: transparent transparent transparent black;
+    transition: 0.2s;
+}
+
+[data-tooltip]:hover:before,
+[data-tooltip]:hover:after {
+    opacity: 1; 
+}
+
+[data-tooltip-right] {
+    position: relative;
+    cursor: pointer;
+    background: black;
+    color: white;
+    border-radius: 1em;
+    padding: 0 0.5em;
+}
+
+[data-tooltip-right]:before {
+    content: attr(data-tooltip-right);
+    position: absolute;
+    opacity: 0;
+    top: 10%;
+    left: 100%;
+    margin-left: 10px;
+    width: max-content;
+    padding: 0.5em;
+    background-color: black;
+    border-radius: 0.25em;
+    color: white;
+    text-align: center;
+    transition: 0.2s;
+}
+
+[data-tooltip-right]:after {
+    content: "";
+    position: absolute;
+    opacity: 0;
+    left: 100%;
+    border: 5px solid black;
+    border-color: transparent black transparent transparent;
+    transition: 0.2s;
+}
+
+[data-tooltip-right]:hover:before,
+[data-tooltip-right]:hover:after {
+    opacity: 1; 
+}
+
+[data-tooltip-avatar] {
+    position: relative;
+}
+
+[data-tooltip-avatar]:before {
+    content: attr(data-tooltip-avatar);
+    position: absolute;
+    opacity: 0;
+    top: 110%;
+    left: 0%;
+    font-size: 12px;
+    margin-left: 10px;
+    padding: 0.5em;
+    background-color: black;
+    border-radius: 0.25em;
+    color: white;
+    text-align: center;
+    transition: 0.2s;
+}
+
+[data-tooltip-avatar]:after {
+    content: "";
+    position: absolute;
+    opacity:0;
+    top: 85%;
+    left: 50%;
+    border: 5px solid black;
+    border-color: transparent transparent black transparent;
+    transition: 0.2s;
+}
+
+[data-tooltip-avatar]:hover:before,
+[data-tooltip-avatar]:hover:after {
+    opacity: 1; 
 }

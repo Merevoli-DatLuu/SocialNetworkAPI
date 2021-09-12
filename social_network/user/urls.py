@@ -5,7 +5,7 @@ from .views import (UserRegisterView, UserLoginView, UserProfileView,
                     friend_send_and_list_friend_others, friend_accept, friend_deny,
                     friend_unfriend, friend_cancel, friend_list_friend,
                     friend_list_send, friend_list_wait, user_follower_create_destroy,
-                    user_follower_list_following, user_follower_list_follower)
+                    user_follower_list_following, user_follower_list_follower, check_auth)
 from dj_rest_auth.registration.views import VerifyEmailView
 from dj_rest_auth.views import PasswordResetView, PasswordResetConfirmView
 
@@ -18,6 +18,7 @@ urlpatterns = [
     path('reset-confirm-password/<uidb64>/<token>/',    PasswordResetConfirmView.as_view(),     name='password_reset_confirm'),
     path('me',                                          UserProfileView.as_view(),              name='current-user'),
     path('',                                            UserListView.as_view(),                 name='user-list'),
+    path('check_auth',                                  check_auth,                             name='user-check-auth'),
     path('<int:user_id>',                               UserDetailView.as_view(),               name='other-user'),
     path('friend/<int:user_id>',                        friend_send_and_list_friend_others,     name='friend-send-and-list-friend-others'),
     path('friend/<int:pk>/accept',                      friend_accept,                          name='friend-accept'),

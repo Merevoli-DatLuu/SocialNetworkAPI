@@ -6,7 +6,7 @@
 ####################################################
 
 
-@access_token = eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNjI5NjkyODM3LCJqdGkiOiIyZWZkNzZiZDYzMjg0YmJiOTZjNGM3MGZhNTk0MjVjNSIsInVzZXJfaWQiOjIwfQ.625Ap7uhKzURKlra2Fcqtsu5gPinuWun5bXEZhxjbm4
+@access_token = {{user_login.response.body.access_token}}
 
 
 ########################
@@ -65,6 +65,7 @@ content-type: application/json
 
 
 ### User Login
+# @name user_login
 POST http://127.0.0.1:8000/api/v1/user/login HTTP/1.1
 content-type: application/json
 
@@ -75,6 +76,7 @@ content-type: application/json
 
 
 ### User Login
+# @name user_login
 POST http://127.0.0.1:8000/api/v1/user/login HTTP/1.1
 content-type: application/json
 
@@ -143,7 +145,13 @@ Authorization: Bearer {{access_token}}
 
 
 ### User List
-GET http://127.0.0.1:8000/api/v1/user/?page=2 HTTP/1.1
+GET http://127.0.0.1:8000/api/v1/user/?page=1 HTTP/1.1
+content-type: application/json
+Authorization: Bearer {{access_token}}
+
+
+### User Check Auth
+GET http://127.0.0.1:8000/api/v1/user/check_auth HTTP/1.1
 content-type: application/json
 Authorization: Bearer {{access_token}}
 

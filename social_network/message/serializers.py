@@ -33,8 +33,14 @@ class PrivateMessageDetailSerializer(serializers.ModelSerializer):
         private_message = get_object_or_404(PrivateMessage, pk=validated_data['message_id'].id)
         message_detail = super().create(validated_data)
         private_message.updated_time = message_detail.created_time
+        private_message.save()
         
         return message_detail
+    
+    def to_representation(self, instance):
+        representation = super().to_representation(instance)
+        representation['user_name'] = instance.user_id.first_name
+        return representation
     
     
 class GroupMessageSerializer(serializers.ModelSerializer):
@@ -65,11 +71,17 @@ class GroupMessageDetailSerializer(serializers.ModelSerializer):
         read_only_fields = ('created_time',)
         
     def create(self, validated_data):
-        private_message = get_object_or_404(GroupMessage, pk=validated_data['group_message_id'].id)
+        group_message = get_object_or_404(GroupMessage, pk=validated_data['group_message_id'].id)
         message_detail = super().create(validated_data)
-        private_message.updated_time = message_detail.created_time
+        group_message.updated_time = message_detail.created_time
+        group_message.save()
         
         return message_detail
+    
+    def to_representation(self, instance):
+        representation = super().to_representation(instance)
+        representation['user_name'] = instance.user_id.first_name
+        return representation
      
         
 class GroupMessageMemberSerializer(serializers.ModelSerializer):

@@ -4,6 +4,9 @@ from django.shortcuts import get_object_or_404
 from django.db.models import Q
 
 from rest_framework.generics import RetrieveAPIView, ListAPIView
+from rest_framework.decorators import api_view, permission_classes
+from rest_framework.permissions import IsAuthenticated
+from rest_framework.response import Response
 from dj_rest_auth.registration.views import RegisterView
 from dj_rest_auth.views import LoginView, PasswordChangeView
 from rest_framework import viewsets
@@ -197,7 +200,17 @@ class UserFollowerViewSet(viewsets.ModelViewSet):
     
     def list_following(self, request, *args, **kwargs):
         return super().list(request, *args, **kwargs)
-    
+        
+     
+@api_view(['GET'])
+@permission_classes([IsAuthenticated])
+def check_auth(request, format=None):
+    content = {
+        'user': str(request.user),  # `django.contrib.auth.User` instance.
+        'auth': str(request.auth),  # None
+    }
+    return Response(content)
+     
         
 friend_send_and_list_friend_others = FriendViewSet.as_view({'post': 'create', 'get': 'list_friend_others'})
 friend_accept = FriendViewSet.as_view({'put': 'update'})

@@ -30,4 +30,4 @@ class PostDocument(Document):
 
         # Paginate the django queryset used to populate the index with the specified size
         # (by default it uses the database driver's default setting)
-        # queryset_pagination = 5000
+        queryset_pagination = 10

@@ -23,7 +23,7 @@ class PrivateMessageViewSet(viewsets.ModelViewSet):
     
 class PrivateMessageDetailViewSet(viewsets.ModelViewSet):
     serializer_class = PrivateMessageDetailSerializer
-    pagination.PageNumberPagination.page_size = 50
+    pagination.PageNumberPagination.page_size = 20
     
     def get_queryset(self):
         return PrivateMessageDetail.objects.filter(message_id=self.kwargs['message_id'])
