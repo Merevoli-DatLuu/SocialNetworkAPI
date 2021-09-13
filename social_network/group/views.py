@@ -43,6 +43,8 @@ class GroupFollowerViewSet(viewsets.ModelViewSet):
     
     def get_permissions(self):
         self.permission_classes = [self.permission_classes[0], GroupActivePermission, GroupPublicFollowerPermission]            
+        if self.action == "list_following":
+            self.permission_classes = [self.permission_classes[0]]
         return super().get_permissions()
     
     def get_queryset(self):

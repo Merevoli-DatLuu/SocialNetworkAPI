@@ -1,5 +1,7 @@
 $(document).ready(init);
 
+const DEFAULT_AVATAR = "img/profile-photos/1.png"
+
 function init(){
     $('#demo-nifty-settings').remove()
     access_token = localStorage.getItem("access_token");

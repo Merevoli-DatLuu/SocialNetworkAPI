@@ -1,9 +1,19 @@
 Vue.component('person-chat', {
     template: `
     <a @click="focusMessage()">
-        <div class="media-left">
-            <img class="img-circle img-xs" src="img/profile-photos/1.png"
+        <div v-if="message_type == 'private'"class="media-left">
+            <img class="img-circle img-xs" v-bind:src=avatar
                 alt="Profile Picture">
+            <i class="
+            badge badge-info badge-stat badge-icon
+            pull-left
+            "></i>
+        </div>
+        <div v-else class="media-left">
+            <img class="img-circle img-xs" v-bind:src=group_avatar[0]
+                style="width: 26px; height: 26px;" alt="Profile Picture">
+            <img v-if="group_avatar.length >= 2" class="img-circle img-xs" v-bind:src=group_avatar[1]
+                style="position: relative; width: 26px; height: 26px; left:-25%" alt="Profile Picture">
             <i class="
             badge badge-info badge-stat badge-icon
             pull-left
@@ -23,11 +33,12 @@ Vue.component('person-chat', {
     `,
     methods: {
         focusMessage: function () {
-            this.$emit('openmessagepanel', this.message_id, this.name, this.message_type)
+            this.$emit('openmessagepanel', this.message_id, this.name, this.message_type, this.avatar, this.group_avatar)
         }
     },
     props: {
         avatar: String,
+        group_avatar: Array,
         message_id: Number,
         message_type: String,
         name: String,
@@ -66,6 +77,7 @@ Vue.component('message-list', {
                 :key="group.id"
                 :message_id="group.message_id"
                 :message_type="group.message_type"
+                :group_avatar="group.group_avatar"
                 :avatar="group.avatar"
                 :name="group.name"
                 :message="group.message"
@@ -93,11 +105,17 @@ Vue.component('message-list', {
                     name = "Me"
                 }
 
+                avatar = data[i].avatar
+                if (!avatar) {
+                    avatar = DEFAULT_AVATAR;
+                }
+
                 persons.push({
                     id: data[i].user_id,
                     message_id: data[i].id,
                     message_type: "private",
-                    avatar: "Default",
+                    avatar: avatar,
+                    group_avatar: [],
                     name: name,
                     message: data[i].last_message,
                     time: this.formatTime(data[i].updated_time)
@@ -120,11 +138,17 @@ Vue.component('message-list', {
             console.log(data)
             groups = []
             for (let i = 0; i < data.length; i++) {
+                for (let j = 0; j < data[i].group_avatar.length; j++){
+                    if (!data[i].group_avatar[j]){
+                        data[i].group_avatar[j] = DEFAULT_AVATAR
+                    } 
+                }
                 groups.push({
                     id: data[i].id,
                     message_id: data[i].id,
                     message_type: "group",
-                    avatar: "Default",
+                    avatar: DEFAULT_AVATAR,
+                    group_avatar: data[i].group_avatar,
                     name: data[i].name,
                     message: data[i].last_message,
                     time: this.formatTime(data[i].updated_time)
@@ -166,8 +190,8 @@ Vue.component('message-list', {
                 }
             }
         },
-        openMessagePanel: function (message_id, name, message_type) {
-            this.$emit('openmessagepanel', message_id, name, message_type)
+        openMessagePanel: function (message_id, name, message_type, avatar, group_avatar) {
+            this.$emit('openmessagepanel', message_id, name, message_type, avatar, group_avatar)
         }
     }
 })
@@ -195,8 +219,8 @@ Vue.component('message-sidebar', {
         </div>
     </div>`,
     methods: {
-        openMessagePanel: function (message_id, name, message_type) {
-            this.$emit('openmessagepanel', message_id, name, message_type)
+        openMessagePanel: function (message_id, name, message_type, avatar, group_avatar) {
+            this.$emit('openmessagepanel', message_id, name, message_type, avatar, group_avatar)
         }
     }
 })
@@ -205,8 +229,8 @@ Vue.component('message-sidebar', {
 Vue.component('message-chat', {
     template: `
     <div v-if="is_owner == true" class="chat-me">
-        <div v-bind:data-tooltip-avatar=avatar class="media-left">
-            <img src="img/profile-photos/1.png" class="img-circle img-sm" alt="Profile Picture">
+        <div v-bind:data-tooltip-avatar=name class="media-left">
+            <img v-bind:src=avatar class="img-circle img-sm" alt="Profile Picture">
         </div>
         <div class="media-body">
             <div v-for="content in contents">
@@ -217,8 +241,8 @@ Vue.component('message-chat', {
         </div>
     </div>
     <div v-else class="chat-user">
-        <div v-bind:data-tooltip-avatar=avatar class="media-left">
-            <img src="img/profile-photos/1.png" class="img-circle img-sm" alt="Profile Picture">
+        <div v-bind:data-tooltip-avatar=name class="media-left">
+            <img v-bind:src=avatar class="img-circle img-sm" alt="Profile Picture">
         </div>
         <div class="media-body">
             <div v-for="content in contents">
@@ -230,6 +254,7 @@ Vue.component('message-chat', {
     </div>`,
     props: {
         avatar: String,
+        name: String,
         is_owner: Boolean,
         contents: Array,
         message_contents: Array
@@ -251,6 +276,7 @@ Vue.component('message-content', {
                 <message-chat
                 v-for="message in message_contents"
                 :avatar="message.avatar"
+                :name="message.name"
                 :is_owner="message.is_owner"
                 :contents="message.contents"
                 :message_contents="message_contents"
@@ -358,7 +384,16 @@ Vue.component('message-header', {
                 </ul>
             </div>
         </div>
-        <div class="media-left">
+        <div v-if="message_type == 'private'" class="media-left">
+            <img class="img-circle img-xs" v-bind:src=avatar alt="Profile Picture">
+        </div>
+        <div v-else-if="message_type == 'group' " class="media-left">
+            <img class="img-circle img-xs" v-bind:src=group_avatar[0]
+                style="width: 26px; height: 26px;" alt="Profile Picture">
+            <img v-if="group_avatar.length >= 2" class="img-circle img-xs" v-bind:src=group_avatar[1]
+                style="position: relative; width: 26px; height: 26px; left:-25%" alt="Profile Picture">
+        </div>
+        <div v-else class="media-left">
             <img class="img-circle img-xs" src="img/profile-photos/1.png" alt="Profile Picture">
         </div>
         <div class="media-body">
@@ -367,7 +402,10 @@ Vue.component('message-header', {
         </div>
     </div>`,
     props: {
-        name: String
+        name: String,
+        avatar: String,
+        message_type: String,
+        group_avatar: Array
     }
 })
 
@@ -376,7 +414,12 @@ Vue.component('message-panel', {
     template: `
     <div id="page-content">
         <div class="panel">
-            <message-header :name="name"/>
+            <message-header 
+                :name="name"
+                :message_type="message_type"
+                :avatar="avatar"
+                :group_avatar="group_avatar"
+            />
             <message-content 
                 :message_contents="message_contents"
                 :next_message="next_message"
@@ -391,6 +434,9 @@ Vue.component('message-panel', {
     </div>`,
     props: {
         name: String,
+        avatar: String,
+        message_type: String,
+        group_avatar: Array,
         message_contents: Array,
         next_message: String,
         is_loading: Boolean,
@@ -411,7 +457,12 @@ let vm = new Vue({
     data: function () {
         return {
             name: "",
+            avatar: DEFAULT_AVATAR,
+            my_avatar: DEFAULT_AVATAR,
+            group_avatar: new Array(),
+            group_member: [],
             message_contents: [],
+            message_type: "",
             connection: "",
             is_loading: false,
             next_message: null,
@@ -430,7 +481,10 @@ let vm = new Vue({
                 />
                 <message-panel 
                     :name="name"
+                    :avatar="avatar"
+                    :group_avatar="group_avatar"
                     :message_contents="message_contents"
+                    :message_type="message_type"
                     :next_message="next_message"
                     :is_loading="is_loading"
                     @sendmessagesocket="sendMessageSocket"
@@ -441,6 +495,25 @@ let vm = new Vue({
     </div>`,
     created: function () {
         this.cuser = localStorage.getItem("cuser")
+        var access_token = localStorage.getItem('access_token')
+        const request_get_avatar = (() => axios.get('http://127.0.0.1:8000/api/v1/user/me', {
+            headers: {
+                'Authorization': `Bearer ${access_token}`,
+                'Content-Type': 'application/json'
+            }
+        })
+        .then(response => {
+
+            data = response.data
+            console.log(data)
+            if (data.avatar){
+                this.my_avatar = data.avatar
+            }
+
+        })
+        .catch(e => console.log(e)))
+
+        request_get_avatar()
     },
     updated: function () {
         if (this.is_update_next_message) {
@@ -483,7 +556,7 @@ let vm = new Vue({
                 message: message
             }));
         },
-        initMessage: function (message_id, name, message_type) {
+        initMessage: function (message_id, name, message_type, avatar, group_avatar) {
             var request;
             this.createMessageSocket(message_id, message_type);
             if (message_type == 'private') {
@@ -502,7 +575,9 @@ let vm = new Vue({
                         console.log(messages.length == 0)
                         if (messages.length == 0 || messages[0].is_owner != (data[i].user_id == this.cuser)) {
                             messages.unshift({
-                                avatar: data[i].user_name,
+                                // avatar: data[i].user_name,
+                                name: data[i].user_name,
+                                avatar: (data[i].user_id == this.cuser)?this.my_avatar:this.avatar,
                                 is_owner: data[i].user_id == this.cuser,
                                 contents: [{
                                     message: data[i].content,
@@ -530,8 +605,30 @@ let vm = new Vue({
                         'Content-Type': 'application/json'
                     }
                 })
-                .then(response => {
+                .then(async response => {
 
+                    request_get_member = (() => axios.get(`http://127.0.0.1:8000/api/v1/message/group/${message_id}/member`, {
+                        headers: {
+                            'Authorization': `Bearer ${localStorage.getItem('access_token')}`,
+                            'Content-Type': 'application/json'
+                        }
+                    })
+                    .then(res => {
+                        data = res.data.results
+
+                        for (let i=0; i<data.length; i++){
+                            avatar = data[i].avatar
+                            if (!avatar){
+                                avatar = DEFAULT_AVATAR
+                            }
+                            this.group_member[data[i].user_id] = avatar
+                            console.log(data[i].user_id, avatar)
+                        }
+                    })
+                    .catch(e => console.log(e)))
+
+                    await request_get_member()
+        
                     data = response.data.results
                     console.log(data)
                     messages = []
@@ -539,7 +636,8 @@ let vm = new Vue({
                         console.log(messages.length == 0)
                         if (messages.length == 0 || messages[0].is_owner != (data[i].user_id == this.cuser)) {
                             messages.unshift({
-                                avatar: data[i].user_name,
+                                name: data[i].user_name,
+                                avatar: this.group_member[data[i].user_id],
                                 is_owner: data[i].user_id == this.cuser,
                                 contents: [{
                                     message: data[i].content,
@@ -564,6 +662,10 @@ let vm = new Vue({
             this.message_id = message_id
             this.message_type = message_type
             this.name = name
+            this.avatar = avatar
+            if (group_avatar){
+                this.group_avatar = group_avatar
+            }
             request()
 
         },
@@ -583,7 +685,8 @@ let vm = new Vue({
                     console.log(messages.length == 0)
                     if (messages.length == 0 || messages[0].is_owner != (data[i].user_id == this.cuser)) {
                         messages.unshift({
-                            avatar: data[i].user_name,
+                            name: data[i].user_name,
+                            avatar: (data[i].user_id == this.cuser)?this.my_avatar:this.avatar,
                             is_owner: data[i].user_id == this.cuser,
                             contents: [{
                                 message: data[i].content,
@@ -622,7 +725,7 @@ let vm = new Vue({
                 return `${hours}:${minutes}`
             }
             else if (days < 7){
-                let day = memoDate[date.getDate()]
+                let day = memoDate[date.getDay()]
                 var hours = ("0" + date.getHours()).slice(-2);
                 var minutes = ("0" + date.getMinutes()).slice(-2);
                 return `${day} at ${hours}:${minutes}`
@@ -647,7 +750,8 @@ let vm = new Vue({
             }
             else {
                 this.message_contents.push({
-                    avatar: data.payload.user_name,
+                    name: data.payload.user_name,
+                    avatar: this.group_member[data.payload.user_id],
                     is_owner: (data.payload.user_id == data.payload.cuser),
                     contents: [{
                         message: data.payload.content,

@@ -14,26 +14,16 @@
 ########################
 
 
-### User Login
-POST http://127.0.0.1:8000/api/v1/user/login HTTP/1.1
-content-type: application/json
-
-{
-    "email": "ees69720@cuoly.com",
-    "password": "12345678aa"
-}
-
-
 ### Test Register
 POST http://127.0.0.1:8000/api/v1/user/register HTTP/1.1
 content-type: application/json
 
 {
-    "email": "hbc77435@eoopy.com",
+    "email": "jbk40211@zwoho.com",
     "password1": "12345678aa",
     "password2": "12345678aa",
     "age": "18",
-    "first_name": "Hello"
+    "first_name": "Zelo"
 }
 
 
@@ -70,8 +60,30 @@ POST http://127.0.0.1:8000/api/v1/user/login HTTP/1.1
 content-type: application/json
 
 {
-    "email": "hbc77435@eoopy.com",
+    "email": "datluu.17022@gmail.com",
     "password": "12345678aa"
+}
+
+
+### User Login
+# @name user_login
+POST http://127.0.0.1:8000/api/v1/user/login HTTP/1.1
+content-type: application/json
+
+{
+    "email": "ees69720@cuoly.com",
+    "password": "12345678aa"
+}
+
+
+### User Login
+# @name user_login
+POST http://127.0.0.1:8000/api/v1/user/login HTTP/1.1
+content-type: application/json
+
+{
+    "email": "hbc77435@eoopy.com",
+    "password": "12345678aa"  
 }
 
 
@@ -87,11 +99,12 @@ content-type: application/json
 
 
 ### User Login
+# @name user_login
 POST http://127.0.0.1:8000/api/v1/user/login HTTP/1.1
 content-type: application/json
 
 {
-    "email": "datluu00.com",
+    "email": "jbk40211@zwoho.com",
     "password": "12345678aa"
 }
 
@@ -103,8 +116,8 @@ Authorization: Bearer {{access_token}}
 
 {
     "old_password": "12345678aa",
-    "new_password1": "12345678aa",
-    "new_password2": "12345678aa"
+    "new_password1": "12345678ab",
+    "new_password2": "12345678ab"
 
 }
 
@@ -114,20 +127,20 @@ POST http://127.0.0.1:8000/api/v1/user/reset-password HTTP/1.1
 content-type: application/json
 
 {
-    "email": "ees69720@cuoly.com"
+    "email": "jbk40211@zwoho.com"
 
 }
 
 
 ### User Reset Confirm Password
-POST http://127.0.0.1:8000/api/v1/user/reset-confirm-password/k/aq13c7-7d3a54347343efd56656fc170e868314/ HTTP/1.1
+POST http://127.0.0.1:8000/api/v1/user/reset-confirm-password/o/asxqik-41738aa61946a089b4b7de20c80c591e/ HTTP/1.1
 content-type: application/json
 
 {
-    "uid": "l",
-    "token": "aq16yg-d894fbec430bbe808cb2a96e719d1ee1",
-    "new_password1": "12345678ab",
-    "new_password2": "12345678ab"
+    "uid": "o",
+    "token": "asxqik-41738aa61946a089b4b7de20c80c591e",
+    "new_password1": "12345678aa",
+    "new_password2": "12345678aa"
 
 }
 
@@ -139,7 +152,7 @@ Authorization: Bearer {{access_token}}
 
 
 ### User Detail
-GET http://127.0.0.1:8000/api/v1/user/20 HTTP/1.1
+GET http://127.0.0.1:8000/api/v1/user/21 HTTP/1.1
 content-type: application/json
 Authorization: Bearer {{access_token}}
 
@@ -157,169 +170,13 @@ Authorization: Bearer {{access_token}}
 
 
 
-########################
-#    2. Post Module    #
-########################
-
-
-### Test URL Parameter
-POST http://127.0.0.1:8000/api/v1/post/test/123 HTTP/1.1
-content-type: application/json
-
-
-### Post create 
-POST http://127.0.0.1:8000/api/v1/post HTTP/1.1
-content-type: application/json
-Authorization: Bearer {{access_token}}
-
-{
-    "title": "Title 8",
-    "content": "this is post 8",
-    "mode": "PRIVATE"
-}
-
-
-### Post Update
-PUT http://127.0.0.1:8000/api/v1/post/20 HTTP/1.1
-content-type: application/json
-Authorization: Bearer {{access_token}}
-
-{
-    "title": "Title 8",
-    "content": "this is post 8 (edited)",
-    "mode": "PUBLIC"
-}
-
-
-### Post Detail
-GET http://127.0.0.1:8000/api/v1/post/20 HTTP/1.1
-content-type: application/json
-Authorization: Bearer {{access_token}}
-
-
-### Post List
-GET http://127.0.0.1:8000/api/v1/post HTTP/1.1
-content-type: application/json
-Authorization: Bearer {{access_token}}
-
-
-### Post List
-GET http://127.0.0.1:8000/api/v1/post?page=3 HTTP/1.1
-content-type: application/json
-Authorization: Bearer {{access_token}}
-
-
-### Post Delete
-DELETE http://127.0.0.1:8000/api/v1/post/19 HTTP/1.1
-content-type: application/json
-Authorization: Bearer {{access_token}}
-
-
-
 ############################
-#    3. LikePost Module    #
-############################
-
-
-### Like Post 
-POST http://127.0.0.1:8000/api/v1/like-post/20 HTTP/1.1
-content-type: application/json
-Authorization: Bearer {{access_token}}
-
-
-### Unlike Post 
-DELETE  http://127.0.0.1:8000/api/v1/like-post/8 HTTP/1.1
-content-type: application/json
-Authorization: Bearer {{access_token}}
-
-
-### Likepost list
-GET http://127.0.0.1:8000/api/v1/like-post/18 HTTP/1.1
-content-type: application/json
-Authorization: Bearer {{access_token}}
-
-
-### Likepost list
-GET http://127.0.0.1:8000/api/v1/like-post/4?page=1 HTTP/1.1
-content-type: application/json
-Authorization: Bearer {{access_token}}
-
-
-
-###########################
-#    4. Comment Module    #
-###########################
-
-
-### Comment Create
-POST http://127.0.0.1:8000/api/v1/comment/18 HTTP/1.1
-content-type: application/json
-Authorization: Bearer {{access_token}}
-
-{
-    "content": "This is comment for 4 again again"
-}
-
-
-### Comment List
-GET http://127.0.0.1:8000/api/v1/comment/4 HTTP/1.1
-content-type: application/json
-Authorization: Bearer {{access_token}}
-
-
-### Comment List
-GET http://127.0.0.1:8000/api/v1/comment/4?page=2 HTTP/1.1
-content-type: application/json
-Authorization: Bearer {{access_token}}
-
-
-### Comment Update
-PUT http://127.0.0.1:8000/api/v1/comment/14 HTTP/1.1
-content-type: application/json
-Authorization: Bearer {{access_token}}
-
-{
-    "content": "This is comment for post 4"
-}
-
-
-### Comment Delete
-DELETE  http://127.0.0.1:8000/api/v1/comment/14 HTTP/1.1
-content-type: application/json
-Authorization: Bearer {{access_token}}
-
-
-### Comment Sublist
-GET http://127.0.0.1:8000/api/v1/comment/4/sub/3 HTTP/1.1
-content-type: application/json
-Authorization: Bearer {{access_token}}
-
-
-### Comment Sublist
-GET http://127.0.0.1:8000/api/v1/comment/4/sub/2?page=2 HTTP/1.1
-content-type: application/json
-Authorization: Bearer {{access_token}}
-
-
-### Comment Create 2
-POST http://127.0.0.1:8000/api/v1/comment/4 HTTP/1.1
-content-type: application/json
-Authorization: Bearer {{access_token}}
-
-{
-    "content": "This is comment for 4 again again",
-    "parent_comment": 2
-}
-
-
-
-############################
-#    5. Friend Module      #
+#    2. Friend Module      #
 ############################
 
 
 ### Friend Send request
-POST http://127.0.0.1:8000/api/v1/user/friend/19 HTTP/1.1
+POST http://127.0.0.1:8000/api/v1/user/friend/24 HTTP/1.1
 content-type: application/json
 Authorization: Bearer {{access_token}}
 
@@ -373,8 +230,199 @@ Authorization: Bearer {{access_token}}
 
 
 
+###############################
+#    3 UserFollower Module    #
+###############################
+
+
+### User Follower Create
+POST http://127.0.0.1:8000/api/v1/user/follower/24 HTTP/1.1
+content-type: application/json
+Authorization: Bearer {{access_token}}
+
+
+### User Follower List Follower
+GET http://127.0.0.1:8000/api/v1/user/follower/list-follower HTTP/1.1
+content-type: application/json
+Authorization: Bearer {{access_token}}
+
+
+### User Follower List Following
+GET http://127.0.0.1:8000/api/v1/user/follower/list-following HTTP/1.1
+content-type: application/json
+Authorization: Bearer {{access_token}}
+
+
+### User Follower Delete
+DELETE http://127.0.0.1:8000/api/v1/user/follower/24 HTTP/1.1
+content-type: application/json
+Authorization: Bearer {{access_token}}
+
+
+
+########################
+#    4. Post Module    #
+########################
+
+
+### Post create 
+POST http://127.0.0.1:8000/api/v1/post HTTP/1.1
+content-type: application/json
+Authorization: Bearer {{access_token}}
+
+{
+    "title": "Title 21",
+    "content": "this is post 21",
+    "mode": "PRIVATE"
+}
+
+
+### Post Update
+PUT http://127.0.0.1:8000/api/v1/post/20 HTTP/1.1
+content-type: application/json
+Authorization: Bearer {{access_token}}
+
+{
+    "title": "Title 8",
+    "content": "this is post 8 (edited)",
+    "mode": "PUBLIC"
+}
+
+
+### Post Detail
+GET http://127.0.0.1:8000/api/v1/post/20 HTTP/1.1
+content-type: application/json
+Authorization: Bearer {{access_token}}
+
+
+### Post List
+GET http://127.0.0.1:8000/api/v1/post HTTP/1.1
+content-type: application/json
+Authorization: Bearer {{access_token}}
+
+
+### Post List
+GET http://127.0.0.1:8000/api/v1/post?page=1 HTTP/1.1
+content-type: application/json
+Authorization: Bearer {{access_token}}
+
+
+### Post Delete
+DELETE http://127.0.0.1:8000/api/v1/post/23 HTTP/1.1
+content-type: application/json
+Authorization: Bearer {{access_token}}
+
+
+
+############################
+#    5. LikePost Module    #
+############################
+
+
+### Like Post 
+POST http://127.0.0.1:8000/api/v1/like-post/22 HTTP/1.1
+content-type: application/json
+Authorization: Bearer {{access_token}}
+
+
+### Unlike Post 
+DELETE  http://127.0.0.1:8000/api/v1/like-post/22 HTTP/1.1
+content-type: application/json
+Authorization: Bearer {{access_token}}
+
+
+### Likepost list
+GET http://127.0.0.1:8000/api/v1/like-post/22 HTTP/1.1
+content-type: application/json
+Authorization: Bearer {{access_token}}
+
+
+### Likepost list
+GET http://127.0.0.1:8000/api/v1/like-post/4?page=1 HTTP/1.1
+content-type: application/json
+Authorization: Bearer {{access_token}}
+
+
+
+###########################
+#    6. Comment Module    #
+###########################
+
+
+### Comment Create
+POST http://127.0.0.1:8000/api/v1/comment/18 HTTP/1.1
+content-type: application/json
+Authorization: Bearer {{access_token}}
+
+{
+    "content": "This is comment for 4 again again"
+}
+
+
+### Comment Create (Parent)
+POST http://127.0.0.1:8000/api/v1/comment/18 HTTP/1.1
+content-type: application/json
+Authorization: Bearer {{access_token}}
+
+{
+    "content": "This is comment for 4 parent",
+    "parent_comment": 22
+}
+
+
+### Comment List
+GET http://127.0.0.1:8000/api/v1/comment/18 HTTP/1.1
+content-type: application/json
+Authorization: Bearer {{access_token}}
+
+
+### Comment List
+GET http://127.0.0.1:8000/api/v1/comment/4?page=1 HTTP/1.1
+content-type: application/json
+Authorization: Bearer {{access_token}}
+
+
+### Comment Update
+PUT http://127.0.0.1:8000/api/v1/comment/23 HTTP/1.1
+content-type: application/json
+Authorization: Bearer {{access_token}}
+
+{
+    "content": "This is comment for post 4"
+}
+
+
+### Comment Delete
+DELETE  http://127.0.0.1:8000/api/v1/comment/23 HTTP/1.1
+content-type: application/json
+Authorization: Bearer {{access_token}}
+
+
+### Comment Sublist
+GET http://127.0.0.1:8000/api/v1/comment/18/sub/22 HTTP/1.1
+content-type: application/json
+Authorization: Bearer {{access_token}}
+
+
+### Comment Sublist
+GET http://127.0.0.1:8000/api/v1/comment/4/sub/2?page=2 HTTP/1.1
+content-type: application/json
+Authorization: Bearer {{access_token}}
+
+
+### Comment Create 2
+POST http://127.0.0.1:8000/api/v1/comment/4 HTTP/1.1
+content-type: application/json
+Authorization: Bearer {{access_token}}
+
+{
+    "content": "This is comment for 4 again again",
+    "parent_comment": 3
+}
+
+
 #########################
-#    6. Group Module    #
+#    7. Group Module    #
 #########################
 
 
@@ -384,8 +432,8 @@ content-type: application/json
 Authorization: Bearer {{access_token}}
 
 {
-    "name": "group 04",
-    "description": "this is a description of group 04"
+    "name": "group abc",
+    "description": "this is a description of group abc"
 }
 
 
@@ -408,52 +456,53 @@ Authorization: Bearer {{access_token}}
 
 
 ### Group Update
-PUT http://127.0.0.1:8000/api/v1/group/8 HTTP/1.1
+PUT http://127.0.0.1:8000/api/v1/group/11 HTTP/1.1
 content-type: application/json
 Authorization: Bearer {{access_token}}
 
 {
-    "name": "group 8"
+    "name": "group abc 11",
+    "type": "Private"
 }
 
 
 ### Group Delete
-DELETE http://127.0.0.1:8000/api/v1/group/6 HTTP/1.1
+DELETE http://127.0.0.1:8000/api/v1/group/11 HTTP/1.1
 content-type: application/json
 Authorization: Bearer {{access_token}}
 
 
 
 #################################
-#    7. GroupFollower Module    #
+#    8. GroupFollower Module    #
 #################################
 
 
 ### Group Follower Follow
-POST http://127.0.0.1:8000/api/v1/group/7/follow HTTP/1.1
+POST http://127.0.0.1:8000/api/v1/group/12/follow HTTP/1.1
 content-type: application/json
 Authorization: Bearer {{access_token}}
 
 
 ### Group Follower Unfollow
-DELETE http://127.0.0.1:8000/api/v1/group/8/follow HTTP/1.1
+DELETE http://127.0.0.1:8000/api/v1/group/12/follow HTTP/1.1
 content-type: application/json
 Authorization: Bearer {{access_token}}
 
-### Group Follower Follow
+### Group Follower Get follower
 GET http://127.0.0.1:8000/api/v1/group/8/follow/follower HTTP/1.1
 content-type: application/json
 Authorization: Bearer {{access_token}}
 
-### Group Follower Follow
-GET http://127.0.0.1:8000/api/v1/group/8/follow/following HTTP/1.1
+### Group Follower Get following
+GET http://127.0.0.1:8000/api/v1/group/follow/following HTTP/1.1
 content-type: application/json
 Authorization: Bearer {{access_token}}
 
 
 
 ###############################
-#    8. GroupMember Module    #
+#    9. GroupMember Module    #
 ###############################
 
 ### Group Member Create
@@ -462,7 +511,7 @@ content-type: application/json
 Authorization: Bearer {{access_token}}
 
 {
-    "user_id": 21
+    "user_id": 22
 }
 
 
@@ -485,13 +534,13 @@ Authorization: Bearer {{access_token}}
 
 
 ### Group Member block
-PUT http://127.0.0.1:8000/api/v1/group/8/member/21/block HTTP/1.1
+PUT http://127.0.0.1:8000/api/v1/group/8/member/22/block HTTP/1.1
 content-type: application/json
 Authorization: Bearer {{access_token}}
 
 
 ### Group Member unblock
-PUT http://127.0.0.1:8000/api/v1/group/8/member/21/unblock HTTP/1.1
+PUT http://127.0.0.1:8000/api/v1/group/8/member/22/unblock HTTP/1.1
 content-type: application/json
 Authorization: Bearer {{access_token}}
 
@@ -508,12 +557,12 @@ Authorization: Bearer {{access_token}}
 
 
 ###################################
-#    9. GroupInvitation Module    #
+#    10. GroupInvitation Module    #
 ###################################
 
 
 ### Group Invitation List
-GET http://127.0.0.1:8000/api/v1/group/8/invite HTTP/1.1
+GET http://127.0.0.1:8000/api/v1/group/12/invite HTTP/1.1
 content-type: application/json
 Authorization: Bearer {{access_token}}
 
@@ -531,51 +580,22 @@ Authorization: Bearer {{access_token}}
 
 
 ### Group Invitation Deny
-DELETE http://127.0.0.1:8000/api/v1/group/8/invite/21/deny HTTP/1.1
+DELETE http://127.0.0.1:8000/api/v1/group/12/invite/21/deny HTTP/1.1
 content-type: application/json
 Authorization: Bearer {{access_token}}
 
 
 ### Group Invitation Send
-POST http://127.0.0.1:8000/api/v1/group/7/invite HTTP/1.1
+POST http://127.0.0.1:8000/api/v1/group/12/invite HTTP/1.1
 content-type: application/json
 Authorization: Bearer {{access_token}}
 
 
 ### Group Invitation Cancel
-DELETE http://127.0.0.1:8000/api/v1/group/7/invite/cancel HTTP/1.1
+DELETE http://127.0.0.1:8000/api/v1/group/12/invite/cancel HTTP/1.1
 content-type: application/json
 Authorization: Bearer {{access_token}}
 
-
-
-#################################
-#    10. UserFollower Module    #
-#################################
-
-
-### User Follower Create
-POST http://127.0.0.1:8000/api/v1/user/follower/21 HTTP/1.1
-content-type: application/json
-Authorization: Bearer {{access_token}}
-
-
-### User Follower List Follower
-GET http://127.0.0.1:8000/api/v1/user/follower/list-follower HTTP/1.1
-content-type: application/json
-Authorization: Bearer {{access_token}}
-
-
-### User Follower List Following
-GET http://127.0.0.1:8000/api/v1/user/follower/list-following HTTP/1.1
-content-type: application/json
-Authorization: Bearer {{access_token}}
-
-
-### User Follower Delete
-DELETE http://127.0.0.1:8000/api/v1/user/follower/21 HTTP/1.1
-content-type: application/json
-Authorization: Bearer {{access_token}}
 
 
 
@@ -590,7 +610,7 @@ Authorization: Bearer {{access_token}}
 
 
 ### Private Message Create
-POST http://127.0.0.1:8000/api/v1/message/user/21 HTTP/1.1
+POST http://127.0.0.1:8000/api/v1/message/user/22 HTTP/1.1
 content-type: application/json
 Authorization: Bearer {{access_token}}
 
@@ -602,18 +622,18 @@ Authorization: Bearer {{access_token}}
 
 
 ### Private Message Detail List
-GET http://127.0.0.1:8000/api/v1/message/1 HTTP/1.1
+GET http://127.0.0.1:8000/api/v1/message/2 HTTP/1.1
 content-type: application/json
 Authorization: Bearer {{access_token}}
 
 
 ### Private Message Detail Send
-POST http://127.0.0.1:8000/api/v1/message/1 HTTP/1.1
+POST http://127.0.0.1:8000/api/v1/message/2 HTTP/1.1
 content-type: application/json
 Authorization: Bearer {{access_token}}
 
 {
-    "content": "First Message"
+    "content": "Message new"
 }
 
 

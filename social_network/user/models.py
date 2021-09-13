@@ -16,6 +16,17 @@ class FriendStatus(object):
     ]
 
 
+def user_avatar_directory_path(instance, filename):
+    hex_dump = 0
+    base = 1
+    for c in instance.email:
+        hex_dump += ord(c)*base
+        base *= 256
+    hex_dump = hex(hex_dump)[2:10] 
+    file_extension = filename.split('.')[-1]
+    return 'avatar/avatar-{:04d}-{}.{}'.format(instance.id, hex_dump, file_extension)
+    
+    
 class User(AbstractBaseUser):
     email = models.EmailField(max_length=100, unique=True)
     first_name = models.CharField(max_length=50)
@@ -24,6 +35,7 @@ class User(AbstractBaseUser):
     password = models.CharField(max_length=100,
                                 validators=[validate_secure_email])
     is_verified = models.BooleanField(default=False)
+    avatar      = models.ImageField(upload_to=user_avatar_directory_path, null=True)
 
     date_joined = models.DateTimeField(auto_now_add=True)
     last_login = models.DateTimeField(auto_now=True)
@@ -45,6 +57,7 @@ class User(AbstractBaseUser):
 
     def has_module_perms(self, app_label):
         return True
+    
 
 
 class Friend(models.Model):

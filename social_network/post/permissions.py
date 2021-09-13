@@ -16,6 +16,7 @@ class PostCurrentUserPermission(permissions.BasePermission):
         user_id = post.user_id.id
         return user_id == request.user.id
     
+    
 class CommentCurrentUserPermission(permissions.BasePermission):
     """
     Permission check for correct user

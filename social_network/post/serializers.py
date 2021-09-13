@@ -62,7 +62,8 @@ class CommentSerilizer(serializers.ModelSerializer):
     def validate(self, attrs):
         if 'parent_comment' in attrs:
             commment = Comment.objects.get(pk=attrs['parent_comment'].id)
-            if attrs['post_id'] != commment.post_id:
+            post_id = get_object_or_404(Post, pk=self.context.get('view').kwargs['pk'])
+            if post_id != commment.post_id:
                 raise serializers.ValidationError({"parent_comment": "Parent comment is incorrect"})
 
         return attrs

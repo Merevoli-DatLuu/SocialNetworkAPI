@@ -16,7 +16,7 @@ urlpatterns = [
     
     path('<int:pk>/follow',                         group_follower_change,          name='group-follower-change'),
     path('<int:pk>/follow/follower',                group_follower_list_follower,   name='group-follower-list-follower'),
-    path('<int:pk>/follow/following',               group_follower_list_following,  name='group-follower-list-following'),
+    path('follow/following',                        group_follower_list_following,  name='group-follower-list-following'),
     
     path('<int:pk>/member',                         group_member_list,              name='group-member-list'),
     path('<int:pk>/member/blocked',                 group_member_list_blocked,      name='group-member-list-blocked'),

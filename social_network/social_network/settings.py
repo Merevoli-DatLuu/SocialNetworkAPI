@@ -13,6 +13,7 @@ https://docs.djangoproject.com/en/3.2/ref/settings/
 from pathlib import Path
 from datetime import timedelta
 from django.conf import settings
+import os
 
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -54,7 +55,7 @@ INSTALLED_APPS = [
     'dj_rest_auth.registration',
     'allauth.socialaccount',
     "corsheaders",
-    'django_elasticsearch_dsl',
+    # 'django_elasticsearch_dsl',
     'channels',
     'user.apps.UserConfig',
     'post.apps.PostConfig',
@@ -199,11 +200,11 @@ AUTH_PASSWORD_VALIDATORS = [
 
 # Elastic search
 
-ELASTICSEARCH_DSL={
-    'default': {
-        'hosts': 'localhost:9200'
-    },
-}
+# ELASTICSEARCH_DSL={
+#     'default': {
+#         'hosts': 'localhost:9200'
+#     },
+# }
 
 
 # Internationalization
@@ -224,6 +225,12 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/3.2/howto/static-files/
 
 STATIC_URL = '/static/'
+
+# Base url to serve media files
+MEDIA_URL = '/media/'
+# Path where media is stored
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media/')
+
 
 # Mail Server Config
 EMAIL_USE_TLS = True
